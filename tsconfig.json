@@ -22,6 +22,6 @@
       "@integrations/*": ["apps/backend/src/integrations/*"]
     }
   },
-  "include": ["apps/**/*", "libs/**/*", "database/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["apps/backend/**/*", "libs/**/*", "database/**/*"],
+  "exclude": ["node_modules", "dist", "apps/dashboard"]
 }
