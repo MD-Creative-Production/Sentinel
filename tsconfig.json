@@ -13,7 +13,14 @@
     "resolveJsonModule": true,
     "outDir": "./dist",
     "rootDir": "./",
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "types": ["node"],
+    "ignoreDeprecations": "6.0",
+    "paths": {
+      "@common/*": ["apps/backend/src/common/*"],
+      "@modules/*": ["apps/backend/src/modules/*"],
+      "@integrations/*": ["apps/backend/src/integrations/*"]
+    }
   },
   "include": ["apps/**/*", "libs/**/*", "database/**/*"],
   "exclude": ["node_modules", "dist"]
