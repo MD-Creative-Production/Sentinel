@@ -34,20 +34,43 @@ export class DiscordNotificationProvider implements INotificationProvider {
   }
 
   async sendAlert(payload: NotificationPayload): Promise<void> {
+    const description = payload.summary ?? payload.message;
+    const fields = [
+      ...(payload.riskExplanation
+        ? [
+            {
+              name: 'Risk explanation',
+              value: payload.riskExplanation,
+              inline: false,
+            },
+          ]
+        : []),
+      ...(payload.recommendations && payload.recommendations.length > 0
+        ? [
+            {
+              name: 'Recommended actions',
+              value: payload.recommendations.join('\n• '),
+              inline: false,
+            },
+          ]
+        : []),
+      ...(payload.metadata
+        ? Object.entries(payload.metadata).map(([name, value]) => ({
+            name,
+            value: String(value),
+            inline: true,
+          }))
+        : []),
+    ];
+
     const body = {
       embeds: [
         {
           title: payload.title,
-          description: payload.message,
+          description,
           color: SEVERITY_COLORS[payload.severity],
           timestamp: new Date().toISOString(),
-          fields: payload.metadata
-            ? Object.entries(payload.metadata).map(([name, value]) => ({
-                name,
-                value: String(value),
-                inline: true,
-              }))
-            : [],
+          fields,
         },
       ],
     };

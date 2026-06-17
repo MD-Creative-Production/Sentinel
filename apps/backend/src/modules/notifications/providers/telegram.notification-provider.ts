@@ -36,8 +36,21 @@ export class TelegramNotificationProvider implements INotificationProvider {
     const lines: string[] = [
       `${emoji} *${this.escapeMarkdown(payload.title)}*`,
       '',
-      this.escapeMarkdown(payload.message),
+      this.escapeMarkdown(payload.summary ?? payload.message),
     ];
+
+    if (payload.riskExplanation) {
+      lines.push('');
+      lines.push(`*Risk explanation:* ${this.escapeMarkdown(payload.riskExplanation)}`);
+    }
+
+    if (payload.recommendations?.length) {
+      lines.push('');
+      lines.push('*Recommended actions:*');
+      for (const recommendation of payload.recommendations) {
+        lines.push(`• ${this.escapeMarkdown(recommendation)}`);
+      }
+    }
 
     if (payload.metadata) {
       lines.push('');
