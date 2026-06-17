@@ -5,6 +5,9 @@ export interface NotificationPayload {
   title: string;
   message: string;
   severity: 'low' | 'medium' | 'high' | 'critical';
+  summary?: string;
+  riskExplanation?: string;
+  recommendations?: string[];
   metadata?: Record<string, unknown>;
 }
 
