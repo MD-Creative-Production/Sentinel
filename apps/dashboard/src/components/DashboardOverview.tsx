@@ -386,7 +386,6 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({ data = moc
   return (
     <main className="do-container" aria-label="Dashboard overview">
       <div className="do-inner">
-
         {/* Header */}
         <header className="do-header">
           <div className="do-header-left">
@@ -454,7 +453,6 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({ data = moc
 
         {/* Severity breakdown */}
         <SeverityBreakdown summary={alertSummary} />
-
       </div>
     </main>
   );
