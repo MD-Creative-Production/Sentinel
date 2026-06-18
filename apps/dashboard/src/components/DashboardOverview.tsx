@@ -256,7 +256,12 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({ stats }) => (
       {stats.entries.map(entry => (
         <li key={entry.id} className="do-watchlist__entry">
           <span
-            className={`do-watchlist__entry-dot do-watchlist__entry-dot--${entry.enabled ? 'enabled' : 'disabled'}`}
+            className={[
+              'do-watchlist__entry-dot',
+              entry.enabled
+                ? 'do-watchlist__entry-dot--enabled'
+                : 'do-watchlist__entry-dot--disabled',
+            ].join(' ')}
             aria-label={entry.enabled ? 'Active' : 'Inactive'}
           />
           <div className="do-watchlist__entry-info">
@@ -266,7 +271,12 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({ stats }) => (
             </span>
           </div>
           <span
-            className={`do-watchlist__entry-badge do-watchlist__entry-badge--${entry.isContract ? 'contract' : 'wallet'}`}
+            className={[
+              'do-watchlist__entry-badge',
+              entry.isContract
+                ? 'do-watchlist__entry-badge--contract'
+                : 'do-watchlist__entry-badge--wallet',
+            ].join(' ')}
           >
             {entry.isContract ? 'Contract' : 'Wallet'}
           </span>
@@ -315,14 +325,25 @@ const ActivityFeed: React.FC<ActivityFeedProps> = ({ events }) => (
 
 // ── Icons ──────────────────────────────────────────────────────────────────────
 
+const svgBase = {
+  width: '18',
+  height: '18',
+  viewBox: '0 0 24 24',
+  fill: 'none',
+  strokeWidth: '2.5',
+  strokeLinecap: 'round' as const,
+  strokeLinejoin: 'round' as const,
+  'aria-hidden': true,
+};
+
 const IconShield: React.FC<{ color: string }> = ({ color }) => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <svg {...svgBase} stroke={color}>
     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
   </svg>
 );
 
 const IconAlert: React.FC<{ color: string }> = ({ color }) => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <svg {...svgBase} stroke={color}>
     <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
     <line x1="12" y1="9" x2="12" y2="13" />
     <line x1="12" y1="17" x2="12.01" y2="17" />
@@ -330,20 +351,20 @@ const IconAlert: React.FC<{ color: string }> = ({ color }) => (
 );
 
 const IconCheck: React.FC<{ color: string }> = ({ color }) => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <svg {...svgBase} stroke={color}>
     <polyline points="20 6 9 17 4 12" />
   </svg>
 );
 
 const IconClock: React.FC<{ color: string }> = ({ color }) => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <svg {...svgBase} stroke={color}>
     <circle cx="12" cy="12" r="10" />
     <polyline points="12 6 12 12 16 14" />
   </svg>
 );
 
 const IconList: React.FC<{ color: string }> = ({ color }) => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <svg {...svgBase} stroke={color}>
     <line x1="8" y1="6" x2="21" y2="6" />
     <line x1="8" y1="12" x2="21" y2="12" />
     <line x1="8" y1="18" x2="21" y2="18" />

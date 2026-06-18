@@ -7,7 +7,7 @@ export class OpenAIProvider implements AIProvider {
 
   async analyzeThreat(event: any): Promise<ThreatSummary> {
     // Minimal, efficient implementation: lightweight local heuristic + optional remote call.
-    // For now provide a deterministic lightweight summary so the framework is usable without network.
+    // Provides a deterministic lightweight summary so the framework is usable without network.
 
     const title = event.title || event.alert || 'Security event';
     const description = event.description || JSON.stringify(event).slice(0, 200);
@@ -29,7 +29,7 @@ export class OpenAIProvider implements AIProvider {
   }
 
   async healthCheck(): Promise<boolean> {
-    // If API key configured, assume provider can be used; otherwise still usable in local-only mode.
+    // If API key is configured, assume provider is usable; also works in local-only mode.
     return typeof this.apiKey === 'string' && this.apiKey.length > 0;
   }
 

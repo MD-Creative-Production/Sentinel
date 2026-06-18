@@ -16,7 +16,7 @@ export class DiscordProvider {
     // Basic validation for URL
     try {
       new URL(webhookUrl);
-    } catch (e) {
+    } catch {
       throw new Error('Invalid Discord Webhook URL provided');
     }
     this.webhookUrl = webhookUrl;
