@@ -23,7 +23,7 @@ module.exports = {
   overrides: [
     {
       // Files outside all tsconfigs — lint without type-aware rules
-      files: ['observability/**/*.ts', 'prisma/**/*.ts', 'src/**/*.ts', 'env.d.ts'],
+      files: ['observability/**/*.ts', 'prisma/**/*.ts', 'src/**/*.ts', 'apps/web/**/*.ts', 'apps/web/**/*.tsx', 'env.d.ts'],
       parserOptions: {
         project: null,
       },

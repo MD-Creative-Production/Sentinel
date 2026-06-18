@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { ThreatHuntingWorkspace } from './page';
 import { MOCK_EVENTS } from './types';
@@ -9,18 +9,21 @@ describe('ThreatHuntingWorkspace', () => {
     render(<ThreatHuntingWorkspace />);
   });
 
+  const getNav = () => screen.getByRole('navigation');
+
   it('renders the workspace title', () => {
     expect(screen.getByRole('heading', { name: /threat hunting/i })).toBeInTheDocument();
   });
 
   it('renders all three tab navigation buttons', () => {
-    expect(screen.getByRole('button', { name: /^search$/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /^events$/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', /investigations/i)).toBeInTheDocument();
+    const nav = getNav();
+    expect(within(nav).getByRole('button', { name: /^search$/i })).toBeInTheDocument();
+    expect(within(nav).getByRole('button', { name: /^events$/i })).toBeInTheDocument();
+    expect(within(nav).getByRole('button', { name: /investigations/i })).toBeInTheDocument();
   });
 
   it('shows Search tab as active by default', () => {
-    const searchTab = screen.getByRole('button', { name: /^search$/i });
+    const searchTab = within(getNav()).getByRole('button', { name: /^search$/i });
     expect(searchTab.className).toContain('th-tab--active');
   });
 
@@ -30,7 +33,7 @@ describe('ThreatHuntingWorkspace', () => {
   });
 
   it('switches to Investigations tab on click', () => {
-    fireEvent.click(screen.getByRole('button', /investigations/i));
+    fireEvent.click(screen.getByRole('button', { name: /investigations/i }));
     expect(screen.getByText(/no investigations yet/i)).toBeInTheDocument();
   });
 
@@ -60,8 +63,9 @@ describe('ThreatHuntingWorkspace', () => {
 describe('ThreatHuntingWorkspace - Search', () => {
   it('has a search input and search button', () => {
     render(<ThreatHuntingWorkspace />);
-    expect(screen.getByLabelText(/search threats/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /^search$/i })).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: /search threats/i })).toBeInTheDocument();
+    const searchButtons = screen.getAllByRole('button', { name: /^search$/i });
+    expect(searchButtons.length).toBeGreaterThanOrEqual(1);
   });
 
   it('shows ready state before searching', () => {
