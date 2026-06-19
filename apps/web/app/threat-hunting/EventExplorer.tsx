@@ -16,7 +16,12 @@ function riskLevel(score: number): Severity {
   return 'low';
 }
 
-export const EventExplorer: React.FC<Props> = ({ events, onInvestigate, selectedEvent, onSelectEvent }) => {
+export const EventExplorer: React.FC<Props> = ({
+  events,
+  onInvestigate,
+  selectedEvent,
+  onSelectEvent,
+}) => {
   const stats = useMemo(() => {
     const counts = { critical: 0, high: 0, medium: 0, low: 0 };
     events.forEach(e => {
@@ -28,17 +33,16 @@ export const EventExplorer: React.FC<Props> = ({ events, onInvestigate, selected
     return counts;
   }, [events]);
 
-  const sorted = useMemo(
-    () => [...events].sort((a, b) => b.riskScore - a.riskScore),
-    [events],
-  );
+  const sorted = useMemo(() => [...events].sort((a, b) => b.riskScore - a.riskScore), [events]);
 
   return (
     <div className="ee-container">
       <div className="ee-header">
         <div className="ee-header-left">
           <h2 className="ee-section-title">Event Explorer</h2>
-          <p className="ee-section-desc">Browse and analyze detected security events ({events.length} total)</p>
+          <p className="ee-section-desc">
+            Browse and analyze detected security events ({events.length} total)
+          </p>
         </div>
         <div className="ee-stats-row">
           {(Object.entries(stats) as [Severity, number][]).map(([severity, count]) => (
@@ -108,7 +112,10 @@ export const EventExplorer: React.FC<Props> = ({ events, onInvestigate, selected
             <h3 className="ee-detail-title">
               {selectedEvent.signature} &mdash; {selectedEvent.chain}
             </h3>
-            <button className="ee-detail-investigate-btn" onClick={() => onInvestigate(selectedEvent)}>
+            <button
+              className="ee-detail-investigate-btn"
+              onClick={() => onInvestigate(selectedEvent)}
+            >
               Start Investigation
             </button>
           </div>
@@ -142,7 +149,16 @@ export const EventExplorer: React.FC<Props> = ({ events, onInvestigate, selected
       ) : (
         <div className="ee-empty">
           <div className="ee-empty-icon">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              width="40"
+              height="40"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
             </svg>
           </div>

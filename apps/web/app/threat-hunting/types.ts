@@ -49,7 +49,9 @@ export const MOCK_EVENTS: ThreatEvent[] = [
     chain: 'Ethereum',
     severity: 'critical',
     signature: 'renounceOwnership',
-    description: 'Ownership renouncement detected on Vault contract 0x1a2b...3c4d — possible rug pull precursor',
+    description:
+      'Ownership renouncement detected on Vault contract 0x1a2b...3c4d' +
+      ' — possible rug pull precursor',
     transactionHash: '0xabcd...ef01',
     fromAddress: '0x1a2b...3c4d',
     toAddress: '0x0000...0000',

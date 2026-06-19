@@ -45,12 +45,23 @@ export const InvestigationWorkspace: React.FC<Props> = ({
       <div className="iw-container">
         <div className="iw-empty">
           <div className="iw-empty-icon">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
             </svg>
           </div>
           <p className="iw-empty-text">No investigations yet</p>
-          <p className="iw-empty-hint">Select an event and start an investigation to begin tracking threats</p>
+          <p className="iw-empty-hint">
+            Select an event and start an investigation to begin tracking threats
+          </p>
         </div>
       </div>
     );
@@ -63,24 +74,42 @@ export const InvestigationWorkspace: React.FC<Props> = ({
   return (
     <div className="iw-container">
       <h2 className="iw-header-text">Investigation Workspace</h2>
-      <p className="iw-header-desc">Track and manage your security investigations ({investigations.length} total)</p>
+      <p className="iw-header-desc">
+        Track and manage your security investigations ({investigations.length} total)
+      </p>
 
       <div className="iw-list">
         {sorted.map(inv => {
           const isExpanded = expandedId === inv.id;
           return (
             <div key={inv.id} className="iw-item">
-              <div className="iw-item-header" onClick={() => toggleExpand(inv.id)} role="button" tabIndex={0} onKeyDown={e => e.key === 'Enter' && toggleExpand(inv.id)}>
+              <div
+                className="iw-item-header"
+                onClick={() => toggleExpand(inv.id)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={e => e.key === 'Enter' && toggleExpand(inv.id)}
+              >
                 <div>
                   <h3 className="iw-item-title">{inv.title}</h3>
                   <div className="iw-item-meta">
-                    Created {new Date(inv.createdAt).toLocaleString()} &middot; {inv.notes.length} note{inv.notes.length !== 1 ? 's' : ''}
+                    Created {new Date(inv.createdAt).toLocaleString()} &middot; {inv.notes.length}{' '}
+                    note{inv.notes.length !== 1 ? 's' : ''}
                   </div>
                 </div>
                 <div className="iw-item-badges">
                   <span className={`iw-item-badge iw-item-badge--${inv.status}`}>{inv.status}</span>
                   <span className={`iw-item-chevron ${isExpanded ? 'iw-item-chevron--open' : ''}`}>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
                       <path d="M6 9l6 6 6-6" />
                     </svg>
                   </span>
@@ -109,7 +138,9 @@ export const InvestigationWorkspace: React.FC<Props> = ({
                       <div key={note.id} className="iw-note">
                         <div className="iw-note-header">
                           <span className="iw-note-author">{note.author}</span>
-                          <span className="iw-note-time">{new Date(note.createdAt).toLocaleString()}</span>
+                          <span className="iw-note-time">
+                            {new Date(note.createdAt).toLocaleString()}
+                          </span>
                         </div>
                         <p className="iw-note-content">{note.content}</p>
                       </div>
@@ -126,9 +157,7 @@ export const InvestigationWorkspace: React.FC<Props> = ({
                       className="iw-note-input"
                       placeholder="Add an investigation note..."
                       value={noteInputs[inv.id] ?? ''}
-                      onChange={e =>
-                        setNoteInputs(prev => ({ ...prev, [inv.id]: e.target.value }))
-                      }
+                      onChange={e => setNoteInputs(prev => ({ ...prev, [inv.id]: e.target.value }))}
                       onKeyDown={e => handleNoteKeyDown(e, inv.id)}
                       rows={2}
                     />

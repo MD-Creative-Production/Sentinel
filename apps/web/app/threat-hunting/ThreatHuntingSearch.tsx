@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from 'react';
-import { SearchResult, MOCK_SEARCH_RESULTS } from './types';
+import { ThreatEvent, SearchResult, MOCK_SEARCH_RESULTS } from './types';
 import './ThreatHuntingSearch.css';
 
 interface Props {
-  onInvestigate: (event: any) => void;
+  onInvestigate: (event: Pick<ThreatEvent, 'id' | 'signature' | 'chain'>) => void;
 }
 
 const SEVERITY_FILTERS = ['all', 'critical', 'high', 'medium', 'low'] as const;
@@ -61,7 +61,16 @@ export const ThreatHuntingSearch: React.FC<Props> = ({ onInvestigate }) => {
         <div className="ths-search-row">
           <div className="ths-input-wrapper">
             <span className="ths-input-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <circle cx="11" cy="11" r="8" />
                 <path d="M21 21l-4.35-4.35" />
               </svg>
@@ -99,7 +108,9 @@ export const ThreatHuntingSearch: React.FC<Props> = ({ onInvestigate }) => {
             {SEVERITY_FILTERS.map(s => (
               <button
                 key={s}
-                className={`ths-filter-chip ${severityFilter === s ? 'ths-filter-chip--active' : ''}`}
+                className={`ths-filter-chip ${
+                  severityFilter === s ? 'ths-filter-chip--active' : ''
+                }`}
                 onClick={() => setSeverityFilter(s)}
               >
                 {s.charAt(0).toUpperCase() + s.slice(1)}
@@ -127,20 +138,33 @@ export const ThreatHuntingSearch: React.FC<Props> = ({ onInvestigate }) => {
             {hasSearched ? 'Search Results' : 'Ready to Search'}
           </h2>
           {hasSearched && (
-            <span className="ths-results-count">{filteredResults.length} result{filteredResults.length !== 1 ? 's' : ''}</span>
+            <span className="ths-results-count">
+              {filteredResults.length} result{filteredResults.length !== 1 ? 's' : ''}
+            </span>
           )}
         </div>
 
         {!hasSearched ? (
           <div className="ths-results-empty">
             <div className="ths-results-empty-icon">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <circle cx="11" cy="11" r="8" />
                 <path d="M21 21l-4.35-4.35" />
               </svg>
             </div>
             <p className="ths-results-empty-text">Enter a search query to find threats</p>
-            <p className="ths-results-empty-hint">Search by transaction hash, contract address, event type, or chain</p>
+            <p className="ths-results-empty-hint">
+              Search by transaction hash, contract address, event type, or chain
+            </p>
           </div>
         ) : filteredResults.length === 0 ? (
           <div className="ths-results-empty">

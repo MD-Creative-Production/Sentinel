@@ -41,8 +41,14 @@ describe('ThreatHuntingWorkspace', () => {
     fireEvent.click(screen.getByRole('button', { name: /^events$/i }));
     const criticalCount = MOCK_EVENTS.filter(e => e.severity === 'critical').length;
     const highCount = MOCK_EVENTS.filter(e => e.severity === 'high').length;
-    expect(screen.getByText(criticalCount)).toBeInTheDocument();
-    expect(screen.getByText(highCount)).toBeInTheDocument();
+    const criticalLabel = screen
+      .getAllByText('critical')
+      .find(el => el.classList.contains('ee-stat-label'))!;
+    const highLabel = screen
+      .getAllByText('high')
+      .find(el => el.classList.contains('ee-stat-label'))!;
+    expect(within(criticalLabel.parentElement!).getByText(criticalCount)).toBeInTheDocument();
+    expect(within(highLabel.parentElement!).getByText(highCount)).toBeInTheDocument();
   });
 
   it('shows all events in the explorer table', () => {

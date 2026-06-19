@@ -13,7 +13,9 @@ export const ThreatHuntingWorkspace: React.FC = () => {
   const [investigations, setInvestigations] = useState<Investigation[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<ThreatEvent | null>(null);
 
-  const handleInvestigate = (event: ThreatEvent) => {
+  const handleInvestigate = (
+    event: ThreatEvent | Pick<ThreatEvent, 'id' | 'signature' | 'chain'>,
+  ) => {
     const newInvestigation: Investigation = {
       id: `inv-${Date.now()}`,
       title: `Investigation: ${event.signature} on ${event.chain}`,
@@ -24,7 +26,9 @@ export const ThreatHuntingWorkspace: React.FC = () => {
       status: 'open',
     };
     setInvestigations(prev => [newInvestigation, ...prev]);
-    setSelectedEvent(event);
+    if ('timestamp' in event) {
+      setSelectedEvent(event);
+    }
     setActiveTab('investigations');
   };
 
