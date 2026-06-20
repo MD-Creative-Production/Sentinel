@@ -115,3 +115,73 @@ model GovernanceEvent {
 
   @@map("governance_events")
 }
+
+model MultisigWallet {
+  id                String   @id @default(cuid())
+  address           String   @unique
+  name              String
+  description       String?
+  threshold         Int      // Number of signatures required
+  totalSigners       Int      // Total number of signers
+  organizationName   String?
+  isActive          Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  signers           Signer[]
+  approvals         MultisigApproval[]
+  events            MultisigEvent[]
+
+  @@map("multisig_wallets")
+}
+
+model Signer {
+  id                String   @id @default(cuid())
+  walletId          String
+  address           String
+  name              String?
+  addedAt           DateTime @default(now())
+  removedAt         DateTime?
+  isActive          Boolean  @default(true)
+
+  wallet            MultisigWallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  approvals         MultisigApproval[]
+
+  @@unique([walletId, address])
+  @@map("multisig_signers")
+}
+
+model MultisigApproval {
+  id                String   @id @default(cuid())
+  walletId          String
+  signerId          String?
+  transactionId     String
+  transactionHash   String
+  approvalStatus    String   // "approved", "rejected", "pending"
+  approvedAt        DateTime?
+  metadata          Json?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  wallet            MultisigWallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  signer            Signer? @relation(fields: [signerId], references: [id])
+
+  @@map("multisig_approvals")
+}
+
+model MultisigEvent {
+  id                String   @id @default(cuid())
+  walletId          String
+  eventType         String   // "signer_added", "signer_removed", "threshold_changed", "approval_requested", "approval_given", "transaction_executed"
+  actor              String?  // Address that triggered the event
+  previousValue     String?  // For threshold changes, etc.
+  newValue          String?  // For threshold changes, etc.
+  transactionHash   String?  @unique
+  metadata          Json?
+  severity          String   @default("info") // "info", "warning", "critical"
+  createdAt         DateTime @default(now())
+
+  wallet            MultisigWallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
+
+  @@map("multisig_events")
+}
