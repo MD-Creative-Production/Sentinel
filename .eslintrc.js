@@ -37,5 +37,16 @@ module.exports = {
         '@typescript-eslint/no-require-imports': 'off',
       },
     },
+    {
+      // apps/web has its own tsconfig so typed linting resolves correctly
+      files: ['apps/web/**/*.ts', 'apps/web/**/*.tsx'],
+      parserOptions: {
+        project: ['apps/web/tsconfig.json'],
+        tsconfigRootDir: __dirname,
+      },
+      rules: {
+        '@typescript-eslint/no-require-imports': 'off',
+      },
+    },
   ],
 };
