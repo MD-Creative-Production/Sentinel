@@ -5,6 +5,10 @@ import { HealthModule } from './modules/health/health.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
 import { ReportingModule } from './modules/reporting/reporting.module';
 import { DependencyTrackerModule } from './modules/contracts/dependencies/dependency-tracker.module';
+import { GovernanceModule } from './modules/governance/governance.module';
+import { SiemModule } from './integrations/siem/siem.module';
+import { ChainsModule } from './modules/chains/chains.module';
+import { RiskAnalyzerModule } from './modules/soroban/risk/risk-analyzer.module';
 
 @Module({
   imports: [
@@ -13,6 +17,10 @@ import { DependencyTrackerModule } from './modules/contracts/dependencies/depend
     NotificationsModule,
     ReportingModule,
     DependencyTrackerModule,
+    GovernanceModule,
+    SiemModule,
+    ChainsModule,
+    RiskAnalyzerModule,
   ],
   controllers: [AppController],
 })

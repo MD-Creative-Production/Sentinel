@@ -1,7 +1,7 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: ['tsconfig.json', 'apps/dashboard/tsconfig.json'],
+    project: ['tsconfig.json'],
     tsconfigRootDir: __dirname,
     sourceType: 'module',
   },
@@ -12,7 +12,13 @@ module.exports = {
   ],
   root: true,
   env: { node: true },
-  ignorePatterns: ['.eslintrc.js', 'dist/**'],
+  // Exclude the Next.js dashboard app entirely — it uses its own tsconfig/eslint
+  // and its files are not included in the root tsconfig project references.
+  ignorePatterns: [
+    '.eslintrc.js',
+    'dist/**',
+    'apps/dashboard/**',
+  ],
   rules: {
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',

@@ -3,7 +3,7 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   rootDir: '.',
-  testMatch: ['<rootDir>/apps/backend/**/*.spec.ts'],
+  testMatch: ['<rootDir>/apps/backend/**/*.spec.ts', '<rootDir>/src/**/*.spec.ts'],
   transform: {
     '^.+\\.ts$': ['ts-jest', {
       tsconfig: {
@@ -22,5 +22,5 @@ module.exports = {
     '^@common/(.*)$': '<rootDir>/apps/backend/src/common/$1',
     '^@modules/(.*)$': '<rootDir>/apps/backend/src/modules/$1',
   },
-  collectCoverageFrom: ['apps/backend/src/**/*.ts', '!**/*.module.ts'],
+  collectCoverageFrom: ['apps/backend/src/**/*.ts', 'src/**/*.ts', '!**/*.module.ts'],
 };

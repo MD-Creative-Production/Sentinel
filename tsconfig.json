@@ -16,9 +16,9 @@
     "baseUrl": "./",
     "types": ["node", "jest"],
     "paths": {
-      "@common/*": ["apps/backend/src/common/*"],
-      "@modules/*": ["apps/backend/src/modules/*"],
-      "@integrations/*": ["apps/backend/src/integrations/*"]
+      "@common/*": ["./apps/backend/src/common/*"],
+      "@modules/*": ["./apps/backend/src/modules/*"],
+      "@integrations/*": ["./apps/backend/src/integrations/*"]
     }
   },
   "include": ["apps/backend/**/*", "libs/**/*", "database/**/*"],

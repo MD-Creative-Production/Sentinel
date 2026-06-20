@@ -4,7 +4,7 @@
   "description": "[![License: MIT](https://img.shields.io/badge/License-MIT-red.svg)](https://opensource.org/licenses/MIT)\r [![Ecosystem: Stellar/EVM](https://img.shields.io/badge/Ecosystem-Stellar%20%7C%20EVM-purple.svg)](https://stellar.org)\r [![Security: Real--Time](https://img.shields.io/badge/Security-Real--Time%20Monitoring-orange.svg)](#)",
   "main": "index.js",
   "scripts": {
-    "build": "npm run build:backend && npm run prisma:generate",
+    "build": "npm run prisma:generate && npm run build:backend",
     "build:backend": "tsc --project apps/backend/tsconfig.app.json",
     "build:dashboard": "tsc --project apps/dashboard/tsconfig.json",
     "lint": "eslint . --ext .ts,.tsx",
@@ -28,7 +28,7 @@
     "docker:db:reset": "docker-compose exec backend npx prisma migrate reset",
     "docker:db:studio": "docker-compose exec backend npx prisma studio",
     "docker:ps": "docker-compose ps",
-    "prepare": "husky install",
+    "prepare": "husky || true",
     "lint-staged": "lint-staged"
   },
   "repository": {

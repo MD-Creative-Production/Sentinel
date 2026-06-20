@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-gray-950 text-gray-100;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    @apply w-1.5 h-1.5;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-900;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-700 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-600;
+  }
+}
+
+@layer components {
+  .sentinel-card {
+    @apply bg-gray-900 border border-gray-800 rounded-xl p-6;
+  }
+
+  .sentinel-badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .sentinel-badge--critical {
+    @apply bg-red-950 text-red-400 border border-red-800;
+  }
+
+  .sentinel-badge--high {
+    @apply bg-orange-950 text-orange-400 border border-orange-800;
+  }
+
+  .sentinel-badge--medium {
+    @apply bg-yellow-950 text-yellow-400 border border-yellow-800;
+  }
+
+  .sentinel-badge--low {
+    @apply bg-blue-950 text-blue-400 border border-blue-800;
+  }
+}

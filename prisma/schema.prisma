@@ -73,3 +73,45 @@ model AuditLog {
 
   @@map("audit_logs")
 }
+
+model Proposal {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  status      String   @default("active") // "active", "passed", "rejected"
+  proposer    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  votes       Vote[]
+  events      GovernanceEvent[]
+
+  @@map("proposals")
+}
+
+model Vote {
+  id         String   @id @default(cuid())
+  proposalId String
+  voter      String
+  choice     String   // "yes", "no", "abstain"
+  weight     String
+  createdAt  DateTime @default(now())
+
+  proposal   Proposal @relation(fields: [proposalId], references: [id])
+
+  @@map("votes")
+}
+
+model GovernanceEvent {
+  id              String   @id @default(cuid())
+  eventType       String   // "proposal_created", "vote_cast"
+  proposalId      String?
+  voter           String?
+  transactionHash String   @unique
+  metadata        Json?
+  createdAt       DateTime @default(now())
+
+  proposal        Proposal? @relation(fields: [proposalId], references: [id])
+
+  @@map("governance_events")
+}
