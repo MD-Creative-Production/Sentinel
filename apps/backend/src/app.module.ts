@@ -9,6 +9,7 @@ import { GovernanceModule } from './modules/governance/governance.module';
 import { SiemModule } from './integrations/siem/siem.module';
 import { ChainsModule } from './modules/chains/chains.module';
 import { RiskAnalyzerModule } from './modules/soroban/risk/risk-analyzer.module';
+import { ProtocolHealthModule } from './modules/protocols/health/protocol-health.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { RiskAnalyzerModule } from './modules/soroban/risk/risk-analyzer.module'
     SiemModule,
     ChainsModule,
     RiskAnalyzerModule,
+    ProtocolHealthModule,
   ],
   controllers: [AppController],
 })
