@@ -29,6 +29,12 @@ import { ISiemProvider } from './interfaces/siem-provider.interface';
               hecUrl: process.env.SPLUNK_HEC_URL,
               hecToken: process.env.SPLUNK_HEC_TOKEN,
               sourceType: process.env.SPLUNK_SOURCE_TYPE,
+              maxRetries: process.env.SPLUNK_MAX_RETRIES
+                ? parseInt(process.env.SPLUNK_MAX_RETRIES, 10)
+                : undefined,
+              retryBaseDelayMs: process.env.SPLUNK_RETRY_BASE_DELAY_MS
+                ? parseInt(process.env.SPLUNK_RETRY_BASE_DELAY_MS, 10)
+                : undefined,
             }),
           );
         }

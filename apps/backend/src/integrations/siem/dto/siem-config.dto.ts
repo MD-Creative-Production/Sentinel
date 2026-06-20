@@ -8,6 +8,10 @@ export interface SplunkSiemConfig {
   hecToken: string;
   /** Splunk source type tag applied to every event (default: "sentinel:security"). */
   sourceType?: string;
+  /** Max retry attempts on transient delivery failure (default: 3). */
+  maxRetries?: number;
+  /** Base backoff delay in ms between retries, doubled each attempt (default: 500). */
+  retryBaseDelayMs?: number;
 }
 
 /**
