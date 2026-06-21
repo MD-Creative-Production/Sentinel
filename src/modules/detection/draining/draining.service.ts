@@ -75,8 +75,7 @@ export class DrainingService {
     const drainRatio = amountDrained / oldest.balance;
     if (drainRatio < this.drainThreshold) return null;
 
-    const durationMs =
-      new Date(newest.timestamp).getTime() - new Date(oldest.timestamp).getTime();
+    const durationMs = new Date(newest.timestamp).getTime() - new Date(oldest.timestamp).getTime();
 
     const severity = this.classifySeverity(drainRatio, durationMs);
     const alert = this.buildAlert(address, amountDrained, drainRatio, durationMs, severity);
@@ -126,9 +125,7 @@ export class DrainingService {
   private pruneHistory(address: string): void {
     const cutoff = this.now() - this.windowMs;
     const snapshots = this.history.get(address)!;
-    const keep = snapshots.filter(
-      (s) => new Date(s.timestamp).getTime() >= cutoff,
-    );
+    const keep = snapshots.filter(s => new Date(s.timestamp).getTime() >= cutoff);
     this.history.set(address, keep);
   }
 

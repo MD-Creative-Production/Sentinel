@@ -134,7 +134,7 @@ describe('DrainingService', () => {
       service.recordBalance(addr, 1000);
       service.recordBalance(addr2, 2000);
       clock += 30_000;
-      const e1 = service.recordBalance(addr, 0);   // drained
+      const e1 = service.recordBalance(addr, 0); // drained
       const e2 = service.recordBalance(addr2, 1900); // not drained (<5%)
       expect(e1).not.toBeNull();
       expect(e2).toBeNull();
