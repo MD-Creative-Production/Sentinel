@@ -14,6 +14,7 @@ model User {
   watchlist Watchlist[]
   notificationPreferences NotificationPreference[]
   auditLogs               AuditLog[]
+  cases                   Case[]
 
   @@map("users")
 }
@@ -117,6 +118,25 @@ model GovernanceEvent {
 }
 
 // ---------------------------------------------------------------------------
+// Case Management – independent investigation tracking
+// ---------------------------------------------------------------------------
+
+model Case {
+  id        String   @id @default(cuid())
+  title     String
+  ownerId   String
+  status    String   @default("open") // "open", "in_progress", "closed", "on_hold"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  owner                User                  @relation(fields: [ownerId], references: [id])
+  investigationNotes   InvestigationNote[]
+
+  @@index([ownerId])
+  @@map("cases")
+}
+
+// ---------------------------------------------------------------------------
 // Investigation Notes – issue #127
 // ---------------------------------------------------------------------------
 
@@ -133,7 +153,8 @@ model InvestigationNote {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
-  auditEntries NoteAuditLog[]
+  case          Case            @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  auditEntries  NoteAuditLog[]
 
   @@index([caseId])
   @@map("investigation_notes")
