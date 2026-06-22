@@ -18,8 +18,7 @@
       "@common/*": ["./apps/backend/src/common/*"],
       "@modules/*": ["./apps/backend/src/modules/*"],
       "@integrations/*": ["./apps/backend/src/integrations/*"]
-    },
-    "types": ["node", "jest"]
+    }
   },
   "include": ["apps/backend/**/*", "libs/**/*", "database/**/*"],
   "exclude": ["node_modules", "dist", "apps/dashboard"]
