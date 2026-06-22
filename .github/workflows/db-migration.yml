@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'prisma/schema.prisma'
+      - 'prisma.config.ts'
       - 'prisma/migrations/**'
 
 permissions:
@@ -43,13 +44,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Check migration status
-        run: npx prisma migrate status
+      - name: Deploy migrations
+        run: npx prisma migrate deploy
         env:
           DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
 
-      - name: Deploy migrations
-        run: npx prisma migrate deploy
+      - name: Check migration status
+        run: npx prisma migrate status
         env:
           DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
 
