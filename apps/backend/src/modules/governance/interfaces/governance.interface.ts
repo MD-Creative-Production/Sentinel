@@ -3,7 +3,8 @@ export interface GovernanceEventDto {
   proposalId?: string;
   voter?: string;
   transactionHash: string;
-  metadata?: Record<string, any>;
+  // Use unknown to avoid eslint no-explicit-any while still allowing arbitrary metadata
+  metadata?: unknown;
 }
 
 export interface ProposalDto {

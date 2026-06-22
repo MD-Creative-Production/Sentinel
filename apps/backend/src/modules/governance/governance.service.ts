@@ -62,7 +62,8 @@ export class GovernanceService {
         proposalId: dto.proposalId,
         voter: dto.voter,
         transactionHash: dto.transactionHash,
-        metadata: dto.metadata || {},
+        // Prisma expects JSON; cast unknown to any here after validation upstream
+        metadata: (dto.metadata as any) || {},
       },
     });
     return event;
