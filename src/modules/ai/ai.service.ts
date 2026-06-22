@@ -4,12 +4,12 @@ import { ThreatSummary, Severity } from './interfaces/threat-summary.interface';
 export class AIService {
   constructor(private providers: AIProvider[] = []) {}
 
-  async summarize(event: any): Promise<ThreatSummary[]> {
+  async summarize(event: unknown): Promise<ThreatSummary[]> {
     const results = await Promise.all(this.providers.map(p => p.analyzeThreat(event)));
     return results;
   }
 
-  async bestSummary(event: any): Promise<ThreatSummary | null> {
+  async bestSummary(event: unknown): Promise<ThreatSummary | null> {
     const summaries = await this.summarize(event);
     if (summaries.length === 0) return null;
 

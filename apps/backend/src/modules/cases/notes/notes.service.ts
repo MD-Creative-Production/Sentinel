@@ -1,5 +1,19 @@
 import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Prisma } from '@prisma/client';
+type NoteMetadata = {
+  type: 'investigation_note';
+  caseId: string;
+  authorId: string;
+  authorName: string;
+  title: string | null;
+  content: string;
+  tags: string[];
+  createdAt: string;
+  updatedAt: string;
+  deleted: boolean;
+  deletedAt?: string;
+};
+
 import {
   CreateNoteDto,
   UpdateNoteDto,
@@ -38,7 +52,7 @@ export class NotesService {
     const auditId = this.generateId('audit');
     const now = new Date().toISOString();
 
-    const newValues: Record<string, any> = {
+    const newValues: Record<string, unknown> = {
       caseId: dto.caseId,
       authorId: dto.authorId,
       authorName: dto.authorName,
@@ -57,7 +71,7 @@ export class NotesService {
           noteId,
           action: 'created',
           previousValues: null,
-          newValues,
+          newValues: newValues as Prisma.JsonObject,
           timestamp: now,
         },
       },
@@ -82,7 +96,7 @@ export class NotesService {
           createdAt: now,
           updatedAt: now,
           deleted: false,
-        },
+        } as Prisma.JsonObject,
       },
     });
 
@@ -120,7 +134,7 @@ export class NotesService {
     });
 
     const caseNotes = records.filter(r => {
-      const meta = r.metadata as Record<string, any>;
+      const meta = r.metadata as NoteMetadata;
       return meta?.type === 'investigation_note' && meta?.caseId === caseId && !meta?.deleted;
     });
 
@@ -139,11 +153,11 @@ export class NotesService {
       where: { id: noteId },
     });
 
-    if (!record || (record.metadata as any)?.type !== 'investigation_note') {
+    if (!record || (record.metadata as NoteMetadata)?.type !== 'investigation_note') {
       throw new NotFoundException(`Note ${noteId} not found`);
     }
 
-    if ((record.metadata as any)?.deleted) {
+    if ((record.metadata as NoteMetadata)?.deleted) {
       throw new NotFoundException(`Note ${noteId} has been deleted`);
     }
 
@@ -175,11 +189,11 @@ export class NotesService {
   ): Promise<InvestigationNote> {
     const record = await this.prisma.auditLog.findUnique({ where: { id: noteId } });
 
-    if (!record || (record.metadata as any)?.type !== 'investigation_note') {
+    if (!record || (record.metadata as NoteMetadata)?.type !== 'investigation_note') {
       throw new NotFoundException(`Note ${noteId} not found`);
     }
 
-    const meta = record.metadata as Record<string, any>;
+    const meta = record.metadata as NoteMetadata;
 
     if (meta.deleted) {
       throw new NotFoundException(`Note ${noteId} has been deleted`);
@@ -189,7 +203,7 @@ export class NotesService {
       throw new ForbiddenException('Only the note author may edit this note');
     }
 
-    const previousValues: Record<string, any> = {
+    const previousValues: Record<string, unknown> = {
       content: meta.content,
       title: meta.title,
       tags: meta.tags,
@@ -203,7 +217,7 @@ export class NotesService {
       updatedAt: new Date().toISOString(),
     };
 
-    const newValues: Record<string, any> = {
+    const newValues: Record<string, unknown> = {
       content: updatedMeta.content,
       title: updatedMeta.title,
       tags: updatedMeta.tags,
@@ -212,7 +226,7 @@ export class NotesService {
     // Update the note record in-place
     await this.prisma.auditLog.update({
       where: { id: noteId },
-      data: { metadata: updatedMeta },
+      data: { metadata: updatedMeta as Prisma.JsonObject },
     });
 
     // Append an audit entry
@@ -228,8 +242,8 @@ export class NotesService {
         metadata: {
           noteId,
           action: 'updated',
-          previousValues,
-          newValues,
+          previousValues: previousValues as Prisma.JsonObject,
+          newValues: newValues as Prisma.JsonObject,
           timestamp: now,
         },
       },
@@ -256,11 +270,11 @@ export class NotesService {
   async deleteNote(noteId: string, actorId: string, actorName: string): Promise<void> {
     const record = await this.prisma.auditLog.findUnique({ where: { id: noteId } });
 
-    if (!record || (record.metadata as any)?.type !== 'investigation_note') {
+    if (!record || (record.metadata as NoteMetadata)?.type !== 'investigation_note') {
       throw new NotFoundException(`Note ${noteId} not found`);
     }
 
-    const meta = record.metadata as Record<string, any>;
+    const meta = record.metadata as NoteMetadata;
 
     if (meta.deleted) {
       throw new NotFoundException(`Note ${noteId} has already been deleted`);
@@ -274,7 +288,7 @@ export class NotesService {
 
     await this.prisma.auditLog.update({
       where: { id: noteId },
-      data: { metadata: { ...meta, deleted: true, deletedAt } },
+      data: { metadata: { ...meta, deleted: true, deletedAt } as Prisma.JsonObject },
     });
 
     const auditId = this.generateId('audit');
@@ -291,7 +305,7 @@ export class NotesService {
           previousValues: { deleted: false },
           newValues: { deleted: true, deletedAt },
           timestamp: deletedAt,
-        },
+        } as Prisma.JsonObject,
       },
     });
   }
@@ -310,7 +324,7 @@ export class NotesService {
   async getNoteAuditHistory(noteId: string): Promise<NoteAuditEntry[]> {
     // Verify the note exists
     const record = await this.prisma.auditLog.findUnique({ where: { id: noteId } });
-    if (!record || (record.metadata as any)?.type !== 'investigation_note') {
+    if (!record || (record.metadata as NoteMetadata)?.type !== 'investigation_note') {
       throw new NotFoundException(`Note ${noteId} not found`);
     }
 
@@ -322,18 +336,18 @@ export class NotesService {
     });
 
     return auditRecords
-      .filter(r => (r.metadata as any)?.noteId === noteId)
+      .filter(r => (r.metadata as Prisma.JsonObject)?.noteId === noteId)
       .map(r => {
-        const m = r.metadata as Record<string, any>;
+        const m = r.metadata as Prisma.JsonObject;
         return this.buildAuditEntry(
           r.id,
           noteId,
           m.action as 'created' | 'updated' | 'deleted',
           r.userId,
           r.actor,
-          m.previousValues ?? null,
-          m.newValues,
-          m.timestamp ?? r.createdAt.toISOString(),
+          (m.previousValues as Record<string, unknown>) ?? null,
+          m.newValues as Record<string, unknown>,
+          (m.timestamp as string) ?? r.createdAt.toISOString(),
         );
       });
   }
@@ -342,23 +356,26 @@ export class NotesService {
   // Private helpers
   // ---------------------------------------------------------------------------
 
-  private async hydrateNoteWithAudit(record: any): Promise<InvestigationNote> {
-    const auditHistory = await this.getNoteAuditHistory(record.id);
+  private async hydrateNoteWithAudit(record: Record<string, unknown>): Promise<InvestigationNote> {
+    const auditHistory = await this.getNoteAuditHistory(record.id as string);
     return this.formatNote(record, auditHistory);
   }
 
-  private formatNote(record: any, auditHistory: NoteAuditEntry[]): InvestigationNote {
-    const meta = record.metadata as Record<string, any>;
+  private formatNote(
+    record: Record<string, unknown>,
+    auditHistory: NoteAuditEntry[],
+  ): InvestigationNote {
+    const meta = record.metadata as Record<string, unknown>;
     return {
-      id: record.id,
-      caseId: meta.caseId,
-      authorId: meta.authorId,
-      authorName: meta.authorName,
-      title: meta.title ?? null,
-      content: meta.content,
-      tags: meta.tags ?? [],
-      createdAt: meta.createdAt ?? record.createdAt?.toISOString(),
-      updatedAt: meta.updatedAt ?? record.createdAt?.toISOString(),
+      id: record.id as string,
+      caseId: meta.caseId as string,
+      authorId: meta.authorId as string,
+      authorName: meta.authorName as string,
+      title: (meta.title as string) ?? null,
+      content: meta.content as string,
+      tags: (meta.tags as string[]) ?? [],
+      createdAt: (meta.createdAt as string) ?? (record.createdAt as Date)?.toISOString(),
+      updatedAt: (meta.updatedAt as string) ?? (record.createdAt as Date)?.toISOString(),
       auditHistory,
     };
   }
@@ -369,8 +386,8 @@ export class NotesService {
     action: 'created' | 'updated' | 'deleted',
     actorId: string,
     actorName: string,
-    previousValues: Record<string, any> | null,
-    newValues: Record<string, any>,
+    previousValues: Record<string, unknown> | null,
+    newValues: Record<string, unknown>,
     timestamp: string,
   ): NoteAuditEntry {
     return { id, noteId, action, actorId, actorName, previousValues, newValues, timestamp };

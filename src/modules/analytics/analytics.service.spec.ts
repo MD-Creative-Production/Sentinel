@@ -37,7 +37,7 @@ describe('AnalyticsService', () => {
 
   describe('getAlertMetrics', () => {
     it('should correctly map alert groupings', async () => {
-      mockPrismaClient.alert.groupBy.mockImplementation(async (args: any) => {
+      mockPrismaClient.alert.groupBy.mockImplementation(async (args: unknown) => {
         if (args.by[0] === 'severity') {
           return [
             { severity: 'high', _count: { _all: 5 } },
@@ -71,7 +71,7 @@ describe('AnalyticsService', () => {
 
   describe('getWatchlistMetrics', () => {
     it('should correctly map watchlist groupings', async () => {
-      mockPrismaClient.watchlist.groupBy.mockImplementation(async (args: any) => {
+      mockPrismaClient.watchlist.groupBy.mockImplementation(async (args: unknown) => {
         if (args.by[0] === 'isWallet') {
           return [
             { isWallet: true, _count: { _all: 42 } },

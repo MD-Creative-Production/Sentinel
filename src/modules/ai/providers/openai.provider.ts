@@ -5,7 +5,7 @@ export class OpenAIProvider implements AIProvider {
   name = 'openai';
   constructor(private apiKey: string) {}
 
-  async analyzeThreat(event: any): Promise<ThreatSummary> {
+  async analyzeThreat(event: unknown): Promise<ThreatSummary> {
     // Minimal, efficient implementation: lightweight local heuristic + optional remote call.
     // For now provide a deterministic lightweight summary so the framework is usable without network.
 
@@ -33,7 +33,7 @@ export class OpenAIProvider implements AIProvider {
     return typeof this.apiKey === 'string' && this.apiKey.length > 0;
   }
 
-  private heuristicSeverity(event: any): 'low' | 'medium' | 'high' | 'critical' {
+  private heuristicSeverity(event: unknown): 'low' | 'medium' | 'high' | 'critical' {
     const s = (event.severity || '').toString().toLowerCase();
     if (s.includes('crit') || s === '4') return 'critical';
     if (s.includes('high') || s === '3') return 'high';
@@ -54,7 +54,7 @@ export class OpenAIProvider implements AIProvider {
     }
   }
 
-  private extractIndicators(event: any): string[] {
+  private extractIndicators(event: unknown): string[] {
     const indicators: string[] = [];
     if (event.ip) indicators.push(`ip:${event.ip}`);
     if (event.user) indicators.push(`user:${event.user}`);

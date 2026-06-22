@@ -13,7 +13,7 @@ describe('RbacGuard', () => {
     guard = new RbacGuard(reflector);
   });
 
-  const mockExecutionContext = (user: any): ExecutionContext => {
+  const mockExecutionContext = (user: unknown): ExecutionContext => {
     return {
       switchToHttp: () => ({
         getRequest: () => ({ user }),

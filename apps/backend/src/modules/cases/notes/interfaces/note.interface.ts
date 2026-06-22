@@ -43,9 +43,9 @@ export interface NoteAuditEntry {
   /** Display name of the actor */
   actorName: string;
   /** Snapshot of field values before the change (null on creation) */
-  previousValues: Record<string, any> | null;
+  previousValues: Record<string, unknown> | null;
   /** Snapshot of field values after the change */
-  newValues: Record<string, any>;
+  newValues: Record<string, unknown>;
   /** ISO timestamp of when the action occurred */
   timestamp: string;
 }

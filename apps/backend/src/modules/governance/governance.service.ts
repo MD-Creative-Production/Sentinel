@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Prisma } from '@prisma/client';
 import { ProposalDto, VoteDto, GovernanceEventDto } from './interfaces/governance.interface';
 
 @Injectable()
@@ -62,7 +62,7 @@ export class GovernanceService {
         proposalId: dto.proposalId,
         voter: dto.voter,
         transactionHash: dto.transactionHash,
-        metadata: dto.metadata || {},
+        metadata: (dto.metadata || {}) as Prisma.JsonObject,
       },
     });
     return event;

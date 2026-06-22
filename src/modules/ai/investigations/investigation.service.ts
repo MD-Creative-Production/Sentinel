@@ -19,7 +19,7 @@ export class InvestigationService {
    */
   async generateContext(
     incident: Incident,
-    historicalEvents: any[] = [],
+    historicalEvents: unknown[] = [],
   ): Promise<InvestigationContext> {
     const contextSummary = this.generateContextSummary(incident);
     const relatedEvents = this.suggestRelatedEvents(incident, historicalEvents);
@@ -43,7 +43,7 @@ export class InvestigationService {
    * Suggest related events based on incident characteristics.
    * Uses pattern matching on event types, sources, and time proximity.
    */
-  suggestRelatedEvents(incident: Incident, historicalEvents: any[]): RelatedEvent[] {
+  suggestRelatedEvents(incident: Incident, historicalEvents: unknown[]): RelatedEvent[] {
     if (!historicalEvents || historicalEvents.length === 0) {
       return this.generateSyntheticRelatedEvents(incident);
     }
@@ -186,7 +186,7 @@ export class InvestigationService {
   /**
    * Calculate correlation score between incident and historical event.
    */
-  private calculateCorrelation(incident: Incident, event: any): number {
+  private calculateCorrelation(incident: Incident, event: unknown): number {
     let score = 0.5;
 
     // Boost score for matching source
