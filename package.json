@@ -4,7 +4,7 @@
   "description": "[![License: MIT](https://img.shields.io/badge/License-MIT-red.svg)](https://opensource.org/licenses/MIT)\r [![Ecosystem: Stellar/EVM](https://img.shields.io/badge/Ecosystem-Stellar%20%7C%20EVM-purple.svg)](https://stellar.org)\r [![Security: Real--Time](https://img.shields.io/badge/Security-Real--Time%20Monitoring-orange.svg)](#)",
   "main": "index.js",
   "scripts": {
-    "build": "npm run build:backend && npm run prisma:generate",
+    "build": "npm run prisma:generate && npm run build:backend",
     "build:backend": "tsc --project apps/backend/tsconfig.app.json",
     "build:dashboard": "tsc --project apps/dashboard/tsconfig.json",
     "lint": "eslint . --ext .ts,.tsx",
@@ -17,6 +17,15 @@
     "test:ci": "npm run test -- --ci --coverage",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
+    "prisma:migrate:deploy": "prisma migrate deploy",
+    "prisma:migrate:status": "prisma migrate status",
+    "prisma:migrate:reset": "prisma migrate reset",
+    "prisma:studio": "prisma studio",
+    "db:migrate": "bash scripts/migrate.sh deploy",
+    "db:migrate:dev": "bash scripts/migrate-dev.sh",
+    "db:migrate:new": "bash scripts/migrate.sh create-only",
+    "db:status": "bash scripts/migrate.sh status",
+    "db:rollback:guide": "bash scripts/rollback.sh",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
     "docker:logs": "docker-compose logs -f",
@@ -53,9 +62,9 @@
     "@opentelemetry/sdk-trace-node": "^2.8.0",
     "@opentelemetry/semantic-conventions": "^1.41.1",
     "@prisma/client": "^7.8.0",
-    "@types/node": "^25.9.3",
     "@types/react": "^19.2.17",
     "axios": "^1.17.0",
+    "ethers": "^6.17.0",
     "pg": "^8.21.0",
     "react": "^19.2.7",
     "typeorm": "^1.0.0",
@@ -78,6 +87,7 @@
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^30.0.0",
+    "@types/node": "^26.0.0",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
     "eslint": "^8.50.0",
@@ -92,5 +102,13 @@
     "reflect-metadata": "^0.2.2",
     "ts-jest": "^29.4.11",
     "typescript": "^6.0.3"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/__tests__/**/*.test.ts",
+      "**/tests/**/*.test.ts"
+    ]
   }
 }

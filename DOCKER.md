@@ -64,6 +64,7 @@ docker-compose exec redis redis-cli ping
 ## Services Overview
 
 ### Backend Application (NestJS)
+
 - **Port**: 3000
 - **URL**: http://localhost:3000/api
 - **Container**: sentinel-backend
@@ -73,6 +74,7 @@ docker-compose exec redis redis-cli ping
   - Proper signal handling via dumb-init
 
 ### PostgreSQL Database
+
 - **Port**: 5432
 - **Container**: sentinel-postgres
 - **Credentials**:
@@ -83,6 +85,7 @@ docker-compose exec redis redis-cli ping
 - **Connection String**: `postgresql://sentinel_user:sentinel_password@localhost:5432/sentinel_db`
 
 ### Redis Cache
+
 - **Port**: 6379
 - **Container**: sentinel-redis
 - **Volume**: `redis_data` (persisted)
@@ -335,6 +338,7 @@ For production deployments:
 ## Support
 
 For issues or questions:
+
 1. Check [existing issues](https://github.com/sentinel-security-productions/Sentinel/issues)
 2. Review logs: `docker-compose logs`
 3. Create a new issue with:

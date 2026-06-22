@@ -204,6 +204,7 @@ sentinel/
 ## Quick Reference
 
 ### Module Location Pattern
+
 ```
 apps/backend/src/modules/[feature-name]/
 ├── dto/
@@ -217,6 +218,7 @@ apps/backend/src/modules/[feature-name]/
 ```
 
 ### Common Location Pattern
+
 ```
 apps/backend/src/common/[category]/
 ├── [name].ts
@@ -225,6 +227,7 @@ apps/backend/src/common/[category]/
 ```
 
 ### Integration Location Pattern
+
 ```
 apps/backend/src/integrations/[service]/
 ├── clients/
@@ -236,22 +239,22 @@ apps/backend/src/integrations/[service]/
 
 ## File Naming Conventions
 
-| Type | Pattern | Example |
-|------|---------|---------|
-| Module | `[name].module.ts` | `alerts.module.ts` |
-| Service | `[name].service.ts` | `alert.service.ts` |
-| Controller | `[name].controller.ts` | `alert.controller.ts` |
-| Entity | `[name].entity.ts` | `alert.entity.ts` |
-| DTO | `[action]-[entity].dto.ts` | `create-alert.dto.ts` |
-| Guard | `[name].guard.ts` | `jwt.guard.ts` |
-| Pipe | `[name].pipe.ts` | `validation.pipe.ts` |
-| Filter | `[name].filter.ts` | `http-exception.filter.ts` |
-| Decorator | `[name].decorator.ts` | `audit.decorator.ts` |
-| Repository | `[name].repository.ts` | `alert.repository.ts` |
-| Test | `[name].spec.ts` | `alert.service.spec.ts` |
-| Interface | `[name].interface.ts` | `alert.interface.ts` |
-| Utility | `[name].util.ts` | `crypto.util.ts` |
-| Constant | `[name].constant.ts` | `alert-types.constant.ts` |
+| Type       | Pattern                    | Example                    |
+| ---------- | -------------------------- | -------------------------- |
+| Module     | `[name].module.ts`         | `alerts.module.ts`         |
+| Service    | `[name].service.ts`        | `alert.service.ts`         |
+| Controller | `[name].controller.ts`     | `alert.controller.ts`      |
+| Entity     | `[name].entity.ts`         | `alert.entity.ts`          |
+| DTO        | `[action]-[entity].dto.ts` | `create-alert.dto.ts`      |
+| Guard      | `[name].guard.ts`          | `jwt.guard.ts`             |
+| Pipe       | `[name].pipe.ts`           | `validation.pipe.ts`       |
+| Filter     | `[name].filter.ts`         | `http-exception.filter.ts` |
+| Decorator  | `[name].decorator.ts`      | `audit.decorator.ts`       |
+| Repository | `[name].repository.ts`     | `alert.repository.ts`      |
+| Test       | `[name].spec.ts`           | `alert.service.spec.ts`    |
+| Interface  | `[name].interface.ts`      | `alert.interface.ts`       |
+| Utility    | `[name].util.ts`           | `crypto.util.ts`           |
+| Constant   | `[name].constant.ts`       | `alert-types.constant.ts`  |
 
 ## Module Dependencies
 
@@ -273,6 +276,7 @@ AppModule
 ## Key Directories for Different Tasks
 
 ### Adding a New Feature
+
 1. Create module: `apps/backend/src/modules/feature-name/`
 2. Create DTOs: `apps/backend/src/modules/feature-name/dto/`
 3. Create entities: `apps/backend/src/modules/feature-name/entities/`
@@ -280,12 +284,14 @@ AppModule
 5. Create controller: `apps/backend/src/modules/feature-name/controllers/`
 
 ### Adding Shared Utilities
+
 1. Choose category: `decorators/`, `guards/`, `pipes/`, `utils/`, etc.
 2. Create file: `apps/backend/src/common/[category]/[name].ts`
 3. Export from `index.ts`
 4. Document in `common/README.md`
 
 ### Adding Integration
+
 1. Create module: `apps/backend/src/integrations/service-name/`
 2. Create client: `apps/backend/src/integrations/service-name/clients/`
 3. Create service: `apps/backend/src/integrations/service-name/services/`
@@ -293,33 +299,34 @@ AppModule
 
 ## Configuration Files Location
 
-| File | Purpose |
-|------|---------|
-| `tsconfig.json` | TypeScript compilation settings |
-| `.eslintrc.js` | ESLint rules |
-| `.prettierrc` | Code formatting rules |
-| `Dockerfile` | Docker image definition |
-| `docker-compose.yml` | Docker Compose configuration |
-| `.env.docker` | Docker environment defaults |
-| `.github/workflows/` | CI/CD pipelines |
+| File                 | Purpose                         |
+| -------------------- | ------------------------------- |
+| `tsconfig.json`      | TypeScript compilation settings |
+| `.eslintrc.js`       | ESLint rules                    |
+| `.prettierrc`        | Code formatting rules           |
+| `Dockerfile`         | Docker image definition         |
+| `docker-compose.yml` | Docker Compose configuration    |
+| `.env.docker`        | Docker environment defaults     |
+| `.github/workflows/` | CI/CD pipelines                 |
 
 ## Documentation Files
 
-| File | Location | Purpose |
-|------|----------|---------|
-| ARCHITECTURE.md | Root | System design and principles |
-| PROJECT_STRUCTURE.md | Root | Directory and file reference |
-| DOCKER.md | Root | Docker setup guide |
-| CI.md | Root | CI/CD pipeline guide |
-| README.md | Root | Project overview |
-| README.md | modules/ | Modules explanation |
-| README.md | common/ | Common utilities explanation |
-| README.md | integrations/ | Integrations explanation |
-| README.md | Each module | Module-specific documentation |
+| File                 | Location      | Purpose                       |
+| -------------------- | ------------- | ----------------------------- |
+| ARCHITECTURE.md      | Root          | System design and principles  |
+| PROJECT_STRUCTURE.md | Root          | Directory and file reference  |
+| DOCKER.md            | Root          | Docker setup guide            |
+| CI.md                | Root          | CI/CD pipeline guide          |
+| README.md            | Root          | Project overview              |
+| README.md            | modules/      | Modules explanation           |
+| README.md            | common/       | Common utilities explanation  |
+| README.md            | integrations/ | Integrations explanation      |
+| README.md            | Each module   | Module-specific documentation |
 
 ## Environment Setup
 
 All environment variables are documented in:
+
 - `.env.docker` - Docker development defaults
 - Docker configuration in `DOCKER.md`
 - CI configuration in `CI.md`

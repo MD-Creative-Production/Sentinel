@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ChainRegistryService } from './chain-registry.service';
 import { StellarChainMonitor } from './monitors/stellar.chain-monitor';
+import { EthereumChainMonitor } from './monitors/ethereum.chain-monitor';
 import { IChainMonitor } from './interfaces/chain-monitor.interface';
 
 /**
@@ -20,10 +21,9 @@ import { IChainMonitor } from './interfaces/chain-monitor.interface';
       useFactory: (): IChainMonitor[] => {
         const monitors: IChainMonitor[] = [new StellarChainMonitor()];
 
-        // Future chains — uncomment to activate:
-        // if (process.env.ETHEREUM_RPC_URL) {
-        //   monitors.push(new EthereumChainMonitor(process.env.ETHEREUM_RPC_URL));
-        // }
+        if (process.env.ETHEREUM_RPC_URL) {
+          monitors.push(new EthereumChainMonitor(process.env.ETHEREUM_RPC_URL));
+        }
 
         return monitors;
       },

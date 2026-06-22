@@ -85,7 +85,6 @@ Sentinel includes OpenTelemetry support (`observability/`):
 - [ ] Audit log retention/export configured
 - [ ] Upgrade/rollback procedure documented and tested in staging
 
-
 # Docker Deployment
 
 Sentinel ships with a `Dockerfile` and `docker-compose.yml` for containerized deployment, which bundles the application services alongside PostgreSQL.
@@ -113,14 +112,14 @@ cp .env.docker .env
 
 Review and update the following before starting:
 
-| Variable | Description | Notes |
-|---|---|---|
-| `DATABASE_URL` | PostgreSQL connection string | Should point to the `db` service name, e.g. `postgresql://sentinel:your_password@db:5432/sentinel` |
-| `DATABASE_HOST` | Database host | Use the Compose service name (`db`), not `localhost` |
-| `DATABASE_PASSWORD` | Database password | Set a strong value — also used by the `db` service |
-| `DISCORD_WEBHOOK_URL` | Discord webhook for alerts | Required for alert delivery |
-| `OTEL_ENABLED` | Enable OpenTelemetry tracing | `true` if running the observability stack |
-| `OTEL_EXPORTER_URL` | OTLP collector endpoint | Point to your collector's container/service name |
+| Variable              | Description                  | Notes                                                                                              |
+| --------------------- | ---------------------------- | -------------------------------------------------------------------------------------------------- |
+| `DATABASE_URL`        | PostgreSQL connection string | Should point to the `db` service name, e.g. `postgresql://sentinel:your_password@db:5432/sentinel` |
+| `DATABASE_HOST`       | Database host                | Use the Compose service name (`db`), not `localhost`                                               |
+| `DATABASE_PASSWORD`   | Database password            | Set a strong value — also used by the `db` service                                                 |
+| `DISCORD_WEBHOOK_URL` | Discord webhook for alerts   | Required for alert delivery                                                                        |
+| `OTEL_ENABLED`        | Enable OpenTelemetry tracing | `true` if running the observability stack                                                          |
+| `OTEL_EXPORTER_URL`   | OTLP collector endpoint      | Point to your collector's container/service name                                                   |
 
 > **Tip:** `.env.docker` is a template, not a secrets store. Do not commit a populated `.env` to version control.
 
@@ -194,13 +193,12 @@ For environment variable details not covered here, see `.env.example` and `.env.
 
 ## Troubleshooting
 
-| Issue | Likely Cause |
-|---|---|
-| `app` container restarts in a loop | Database not ready yet — ensure `db` healthcheck passes before `app` starts (check `depends_on` in `docker-compose.yml`) |
-| Migrations fail with connection error | `DATABASE_HOST` must be the Compose service name (`db`), not `localhost` |
-| Alerts not dispatching | Verify `DISCORD_WEBHOOK_URL` / other channel credentials are set in `.env` and the container was rebuilt after changes |
-| Port conflicts on `up` | Another process is using the mapped port — change the host-side port in `docker-compose.yml` |
-
+| Issue                                 | Likely Cause                                                                                                             |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `app` container restarts in a loop    | Database not ready yet — ensure `db` healthcheck passes before `app` starts (check `depends_on` in `docker-compose.yml`) |
+| Migrations fail with connection error | `DATABASE_HOST` must be the Compose service name (`db`), not `localhost`                                                 |
+| Alerts not dispatching                | Verify `DISCORD_WEBHOOK_URL` / other channel credentials are set in `.env` and the container was rebuilt after changes   |
+| Port conflicts on `up`                | Another process is using the mapped port — change the host-side port in `docker-compose.yml`                             |
 
 # Production Considerations
 

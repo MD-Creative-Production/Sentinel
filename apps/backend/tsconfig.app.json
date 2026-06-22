@@ -8,7 +8,7 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "outDir": "./dist",
-    "baseUrl": "./src",
+    "types": ["node"],
     "paths": {
       "@common/*": ["../../../apps/backend/src/common/*"],
       "@modules/*": ["../../../apps/backend/src/modules/*"],

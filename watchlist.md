@@ -8,12 +8,12 @@ List all watchlist entries.
 
 ### Query Parameters
 
-| Param | Type | Description |
-|---|---|---|
-| `page` | integer | Page number (default 1) |
-| `limit` | integer | Items per page (default 20) |
-| `network` | string | Filter by network |
-| `enabled` | boolean | Filter by enabled status |
+| Param     | Type    | Description                 |
+| --------- | ------- | --------------------------- |
+| `page`    | integer | Page number (default 1)     |
+| `limit`   | integer | Items per page (default 20) |
+| `network` | string  | Filter by network           |
+| `enabled` | boolean | Filter by enabled status    |
 
 ### Response `200 OK`
 
@@ -58,10 +58,10 @@ Returns the created watchlist object (see [schemas/watchlist.md](../schemas/watc
 
 ### Errors
 
-| Status | Cause |
-|---|---|
-| 400 | Invalid address format or missing fields |
-| 409 | Address already exists on this network |
+| Status | Cause                                    |
+| ------ | ---------------------------------------- |
+| 400    | Invalid address format or missing fields |
+| 409    | Address already exists on this network   |
 
 ---
 
@@ -75,9 +75,9 @@ Returns a watchlist object.
 
 ### Errors
 
-| Status | Cause |
-|---|---|
-| 404 | Watchlist entry not found |
+| Status | Cause                     |
+| ------ | ------------------------- |
+| 404    | Watchlist entry not found |
 
 ---
 
@@ -116,12 +116,12 @@ List all detection rules.
 
 ### Query Parameters
 
-| Param | Type | Description |
-|---|---|---|
-| `page` | integer | Page number (default 1) |
-| `limit` | integer | Items per page (default 20) |
-| `watchlistId` | string | Filter by watchlist entry |
-| `severity` | string | Filter by severity |
+| Param         | Type    | Description                 |
+| ------------- | ------- | --------------------------- |
+| `page`        | integer | Page number (default 1)     |
+| `limit`       | integer | Items per page (default 20) |
+| `watchlistId` | string  | Filter by watchlist entry   |
+| `severity`    | string  | Filter by severity          |
 
 ### Response `200 OK`
 
@@ -168,10 +168,10 @@ Returns the created rule object (see [schemas/rule.md](../schemas/rule.md)).
 
 ### Errors
 
-| Status | Cause |
-|---|---|
-| 400 | Invalid signature or missing fields |
-| 404 | `watchlistId` does not exist |
+| Status | Cause                               |
+| ------ | ----------------------------------- |
+| 400    | Invalid signature or missing fields |
+| 404    | `watchlistId` does not exist        |
 
 ---
 
@@ -220,16 +220,16 @@ List alerts.
 
 ### Query Parameters
 
-| Param | Type | Description |
-|---|---|---|
-| `page` | integer | Page number (default 1) |
-| `limit` | integer | Items per page (default 20) |
-| `watchlistId` | string | Filter by watchlist entry |
-| `ruleId` | string | Filter by rule |
-| `severity` | string | Filter by severity |
-| `status` | string | Filter by status (`pending`, `confirmed`, `dropped`, `acknowledged`) |
-| `from` | string | ISO date — only alerts detected after this time |
-| `to` | string | ISO date — only alerts detected before this time |
+| Param         | Type    | Description                                                          |
+| ------------- | ------- | -------------------------------------------------------------------- |
+| `page`        | integer | Page number (default 1)                                              |
+| `limit`       | integer | Items per page (default 20)                                          |
+| `watchlistId` | string  | Filter by watchlist entry                                            |
+| `ruleId`      | string  | Filter by rule                                                       |
+| `severity`    | string  | Filter by severity                                                   |
+| `status`      | string  | Filter by status (`pending`, `confirmed`, `dropped`, `acknowledged`) |
+| `from`        | string  | ISO date — only alerts detected after this time                      |
+| `to`          | string  | ISO date — only alerts detected before this time                     |
 
 ### Response `200 OK`
 
@@ -266,9 +266,9 @@ Returns an alert object.
 
 ### Errors
 
-| Status | Cause |
-|---|---|
-| 404 | Alert not found |
+| Status | Cause           |
+| ------ | --------------- |
+| 404    | Alert not found |
 
 ---
 
@@ -329,12 +329,12 @@ Add a new notification channel.
 
 ### Channel Types
 
-| Type | Required `config` fields |
-|---|---|
-| `discord` | `webhookUrl` |
-| `telegram` | `botToken`, `chatId` |
-| `webhook` | `url`, optional `headers` |
-| `pagerduty` | `integrationKey` |
+| Type        | Required `config` fields  |
+| ----------- | ------------------------- |
+| `discord`   | `webhookUrl`              |
+| `telegram`  | `botToken`, `chatId`      |
+| `webhook`   | `url`, optional `headers` |
+| `pagerduty` | `integrationKey`          |
 
 ### Response `201 Created`
 
@@ -389,14 +389,14 @@ List audit log entries.
 
 ### Query Parameters
 
-| Param | Type | Description |
-|---|---|---|
-| `page` | integer | Page number (default 1) |
-| `limit` | integer | Items per page (default 20) |
-| `actorId` | string | Filter by user who performed the action |
-| `action` | string | Filter by action type (e.g. `rule.created`, `watchlist.updated`, `alert.acknowledged`) |
-| `from` | string | ISO date — entries after this time |
-| `to` | string | ISO date — entries before this time |
+| Param     | Type    | Description                                                                            |
+| --------- | ------- | -------------------------------------------------------------------------------------- |
+| `page`    | integer | Page number (default 1)                                                                |
+| `limit`   | integer | Items per page (default 20)                                                            |
+| `actorId` | string  | Filter by user who performed the action                                                |
+| `action`  | string  | Filter by action type (e.g. `rule.created`, `watchlist.updated`, `alert.acknowledged`) |
+| `from`    | string  | ISO date — entries after this time                                                     |
+| `to`      | string  | ISO date — entries before this time                                                    |
 
 ### Response `200 OK`
 
@@ -421,12 +421,12 @@ List audit log entries.
 
 ## Fields
 
-| Field | Type | Description |
-|---|---|---|
-| `id` | string (UUID) | Unique identifier |
-| `actorId` | string (UUID) | User who performed the action |
-| `action` | string | Dot-notation action name, e.g. `resource.verb` |
-| `resourceType` | string | Type of resource affected (`watchlist`, `rule`, `alert`, `notification-channel`) |
-| `resourceId` | string (UUID) | ID of the affected resource |
-| `metadata` | object | Action-specific additional context |
-| `createdAt` | string | Timestamp of the action |
+| Field          | Type          | Description                                                                      |
+| -------------- | ------------- | -------------------------------------------------------------------------------- |
+| `id`           | string (UUID) | Unique identifier                                                                |
+| `actorId`      | string (UUID) | User who performed the action                                                    |
+| `action`       | string        | Dot-notation action name, e.g. `resource.verb`                                   |
+| `resourceType` | string        | Type of resource affected (`watchlist`, `rule`, `alert`, `notification-channel`) |
+| `resourceId`   | string (UUID) | ID of the affected resource                                                      |
+| `metadata`     | object        | Action-specific additional context                                               |
+| `createdAt`    | string        | Timestamp of the action                                                          |

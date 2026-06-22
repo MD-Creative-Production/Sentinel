@@ -32,11 +32,11 @@
 
 Most security incidents are only discovered **after** the hack is finalized on-chain, at which point the funds are usually gone.
 
-| Problem                     | How Sentinel Solves It                                        |
-| --------------------------- | ------------------------------------------------------------- |
-| **The Monitoring Gap**      | Enterprise-grade monitoring accessible to every team size.    |
-| **The "Finality" Trap**     | Mempool-level detection catches threats *before* confirmation. |
-| **Mempool Blindness**       | Real-time visibility into pending transactions signaling attacks. |
+| Problem                 | How Sentinel Solves It                                            |
+| ----------------------- | ----------------------------------------------------------------- |
+| **The Monitoring Gap**  | Enterprise-grade monitoring accessible to every team size.        |
+| **The "Finality" Trap** | Mempool-level detection catches threats _before_ confirmation.    |
+| **Mempool Blindness**   | Real-time visibility into pending transactions signaling attacks. |
 
 ---
 
@@ -138,18 +138,18 @@ cp .env.example .env
 
 Configure the following variables:
 
-| Variable            | Description                         | Example                                    |
-| ------------------- | ----------------------------------- | ------------------------------------------ |
-| `DATABASE_URL`      | PostgreSQL connection string        | `postgresql://user:pass@localhost:5432/sentinel` |
-| `DATABASE_HOST`     | Database host                       | `localhost`                                |
-| `DATABASE_PORT`     | Database port                       | `5432`                                     |
-| `DATABASE_USER`     | Database username                   | `sentinel`                                 |
-| `DATABASE_PASSWORD` | Database password                   | `your_password`                            |
-| `DATABASE_NAME`     | Database name                       | `sentinel`                                 |
-| `DISCORD_WEBHOOK_URL` | Discord webhook for alerts        | `https://discord.com/api/webhooks/...`     |
-| `OTEL_ENABLED`      | Enable OpenTelemetry tracing        | `true`                                     |
-| `OTEL_EXPORTER_URL`  | OTLP collector endpoint             | `http://localhost:4318`                    |
-| `OTEL_SERVICE_NAME`  | Service name for traces             | `sentinel`                                 |
+| Variable              | Description                  | Example                                          |
+| --------------------- | ---------------------------- | ------------------------------------------------ |
+| `DATABASE_URL`        | PostgreSQL connection string | `postgresql://user:pass@localhost:5432/sentinel` |
+| `DATABASE_HOST`       | Database host                | `localhost`                                      |
+| `DATABASE_PORT`       | Database port                | `5432`                                           |
+| `DATABASE_USER`       | Database username            | `sentinel`                                       |
+| `DATABASE_PASSWORD`   | Database password            | `your_password`                                  |
+| `DATABASE_NAME`       | Database name                | `sentinel`                                       |
+| `DISCORD_WEBHOOK_URL` | Discord webhook for alerts   | `https://discord.com/api/webhooks/...`           |
+| `OTEL_ENABLED`        | Enable OpenTelemetry tracing | `true`                                           |
+| `OTEL_EXPORTER_URL`   | OTLP collector endpoint      | `http://localhost:4318`                          |
+| `OTEL_SERVICE_NAME`   | Service name for traces      | `sentinel`                                       |
 
 ### Running the Project
 

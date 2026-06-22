@@ -115,3 +115,42 @@ model GovernanceEvent {
 
   @@map("governance_events")
 }
+
+// ---------------------------------------------------------------------------
+// Investigation Notes – issue #127
+// ---------------------------------------------------------------------------
+
+model InvestigationNote {
+  id         String   @id @default(cuid())
+  caseId     String
+  authorId   String
+  authorName String
+  title      String?
+  content    String
+  tags       String[]
+  deleted    Boolean  @default(false)
+  deletedAt  DateTime?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  auditEntries NoteAuditLog[]
+
+  @@index([caseId])
+  @@map("investigation_notes")
+}
+
+model NoteAuditLog {
+  id             String   @id @default(cuid())
+  noteId         String
+  action         String   // "created" | "updated" | "deleted"
+  actorId        String
+  actorName      String
+  previousValues Json?
+  newValues      Json
+  timestamp      DateTime @default(now())
+
+  note InvestigationNote @relation(fields: [noteId], references: [id])
+
+  @@index([noteId])
+  @@map("note_audit_logs")
+}

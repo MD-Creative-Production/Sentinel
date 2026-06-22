@@ -8,11 +8,11 @@
   --text-muted: #a0a6bc;
   --accent: #6b4cff;
   --accent-hover: #8167ff;
-  
+
   --severity-high-bg: rgba(255, 60, 95, 0.15);
   --severity-high-text: #ff5270;
   --severity-high-border: rgba(255, 60, 95, 0.3);
-  
+
   --severity-medium-bg: rgba(255, 171, 0, 0.15);
   --severity-medium-text: #ffb700;
   --severity-medium-border: rgba(255, 171, 0, 0.3);
@@ -47,8 +47,14 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .card-header {
@@ -102,7 +108,8 @@
   background-size: 1rem;
 }
 
-.chain-select:hover, .chain-select:focus {
+.chain-select:hover,
+.chain-select:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(107, 76, 255, 0.2);
 }

@@ -10,11 +10,11 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD:-sentinel_password}
       POSTGRES_DB: ${DB_NAME:-sentinel_db}
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-sentinel_user}"]
+      test: ['CMD-SHELL', 'pg_isready -U ${DB_USER:-sentinel_user}']
       interval: 10s
       timeout: 5s
       retries: 5
@@ -26,12 +26,12 @@ services:
     image: redis:7-alpine
     container_name: sentinel-redis
     ports:
-      - "6379:6379"
+      - '6379:6379'
     volumes:
       - redis_data:/data
     command: redis-server --appendonly yes
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: ['CMD', 'redis-cli', 'ping']
       interval: 10s
       timeout: 5s
       retries: 5
@@ -50,7 +50,7 @@ services:
       DATABASE_URL: postgresql://${DB_USER:-sentinel_user}:${DB_PASSWORD:-sentinel_password}@postgres:5432/${DB_NAME:-sentinel_db}
       REDIS_URL: redis://redis:6379
     ports:
-      - "3000:3000"
+      - '3000:3000'
     depends_on:
       postgres:
         condition: service_healthy
