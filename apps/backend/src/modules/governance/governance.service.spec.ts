@@ -19,7 +19,7 @@ jest.mock('@prisma/client', () => {
       findMany: jest.fn(),
     },
   };
-  return { PrismaClient: jest.fn(() => mPrismaClient) };
+  return { default: jest.fn(() => mPrismaClient) };
 });
 
 describe('GovernanceService', () => {

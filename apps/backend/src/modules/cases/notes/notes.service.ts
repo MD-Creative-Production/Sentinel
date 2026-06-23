@@ -119,12 +119,12 @@ export class NotesService {
       orderBy: { createdAt: 'desc' },
     });
 
-    const caseNotes = records.filter(r => {
+    const caseNotes = records.filter((r: any) => {
       const meta = r.metadata as Record<string, any>;
       return meta?.type === 'investigation_note' && meta?.caseId === caseId && !meta?.deleted;
     });
 
-    return Promise.all(caseNotes.map(record => this.hydrateNoteWithAudit(record)));
+    return Promise.all(caseNotes.map((record: any) => this.hydrateNoteWithAudit(record)));
   }
 
   /**
@@ -322,8 +322,8 @@ export class NotesService {
     });
 
     return auditRecords
-      .filter(r => (r.metadata as any)?.noteId === noteId)
-      .map(r => {
+      .filter((r: any) => (r.metadata as any)?.noteId === noteId)
+      .map((r: any) => {
         const m = r.metadata as Record<string, any>;
         return this.buildAuditEntry(
           r.id,
