@@ -7,25 +7,58 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  createdAt DateTime @default(now())
-  alerts    Alert[]
-  watchlist Watchlist[]
+  id                      String                   @id @default(cuid())
+  email                   String                   @unique
+  createdAt               DateTime                 @default(now())
+  alerts                  Alert[]
+  watchlist               Watchlist[]
   notificationPreferences NotificationPreference[]
   auditLogs               AuditLog[]
+  ownedOrganizations      Organization[]           @relation("OrganizationOwner")
+  organizationMemberships OrganizationMember[]
 
   @@map("users")
 }
 
+model Organization {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  ownerId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  owner   User                 @relation("OrganizationOwner", fields: [ownerId], references: [id])
+  members OrganizationMember[]
+
+  @@index([ownerId])
+  @@map("organizations")
+}
+
+model OrganizationMember {
+  id             String   @id @default(cuid())
+  organizationId String
+  userId         String
+  role           String   @default("member")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([organizationId, userId])
+  @@index([userId])
+  @@map("organization_members")
+}
+
 model Alert {
-  id        String      @id @default(cuid())
+  id        String   @id @default(cuid())
   userId    String
   message   String
   severity  String
-  status    String      @default("open")
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  status    String   @default("open")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   acknowledgedAt DateTime?
   acknowledgedBy String?
@@ -86,8 +119,8 @@ model Proposal {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  votes       Vote[]
-  events      GovernanceEvent[]
+  votes  Vote[]
+  events GovernanceEvent[]
 
   @@map("proposals")
 }
@@ -96,25 +129,25 @@ model Vote {
   id         String   @id @default(cuid())
   proposalId String
   voter      String
-  choice     String   // "yes", "no", "abstain"
+  choice     String // "yes", "no", "abstain"
   weight     String
   createdAt  DateTime @default(now())
 
-  proposal   Proposal @relation(fields: [proposalId], references: [id])
+  proposal Proposal @relation(fields: [proposalId], references: [id])
 
   @@map("votes")
 }
 
 model GovernanceEvent {
   id              String   @id @default(cuid())
-  eventType       String   // "proposal_created", "vote_cast"
+  eventType       String // "proposal_created", "vote_cast"
   proposalId      String?
   voter           String?
   transactionHash String   @unique
   metadata        Json?
   createdAt       DateTime @default(now())
 
-  proposal        Proposal? @relation(fields: [proposalId], references: [id])
+  proposal Proposal? @relation(fields: [proposalId], references: [id])
 
   @@map("governance_events")
 }
@@ -124,17 +157,17 @@ model GovernanceEvent {
 // ---------------------------------------------------------------------------
 
 model InvestigationNote {
-  id         String   @id @default(cuid())
+  id         String    @id @default(cuid())
   caseId     String
   authorId   String
   authorName String
   title      String?
   content    String
   tags       String[]
-  deleted    Boolean  @default(false)
+  deleted    Boolean   @default(false)
   deletedAt  DateTime?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 
   auditEntries NoteAuditLog[]
 
@@ -145,7 +178,7 @@ model InvestigationNote {
 model NoteAuditLog {
   id             String   @id @default(cuid())
   noteId         String
-  action         String   // "created" | "updated" | "deleted"
+  action         String // "created" | "updated" | "deleted"
   actorId        String
   actorName      String
   previousValues Json?

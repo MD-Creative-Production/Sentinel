@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'prisma/schema.prisma'
+      - 'prisma.config.ts'
       - 'prisma/migrations/**'
 
 permissions:
