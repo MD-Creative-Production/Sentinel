@@ -12,6 +12,6 @@
     "noEmit": true,
     "types": ["node", "react", "react-dom"]
   },
-  "include": ["app/**/*", "src/**/*"],
+  "include": ["app/**/*", "lib/**/*", "src/**/*"],
   "exclude": ["node_modules", "dist"]
 }
