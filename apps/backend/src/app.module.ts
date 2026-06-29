@@ -11,7 +11,9 @@ import { ChainsModule } from './modules/chains/chains.module';
 import { RiskAnalyzerModule } from './modules/soroban/risk/risk-analyzer.module';
 import { NotesModule } from './modules/cases/notes/notes.module';
 import { AlertsModule } from './modules/alerts/alerts.module';
+
 import { ReportsModule } from '../../../src/modules/reports/reports.module';
+import { ProfileModule } from './modules/profile/profile.module';
 
 @Module({
   imports: [
@@ -27,6 +29,7 @@ import { ReportsModule } from '../../../src/modules/reports/reports.module';
     RiskAnalyzerModule,
     NotesModule,
     AlertsModule,
+    ProfileModule,
   ],
   controllers: [AppController],
 })
