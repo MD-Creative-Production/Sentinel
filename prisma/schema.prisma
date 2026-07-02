@@ -14,6 +14,7 @@ model User {
   watchlist Watchlist[]
   notificationPreferences NotificationPreference[]
   auditLogs               AuditLog[]
+  apiKeys                 ApiKey[]
 
   @@map("users")
 }
@@ -26,6 +27,9 @@ model Alert {
   status    String      @default("open")
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
+
+  acknowledgedAt DateTime?
+  acknowledgedBy String?
 
   user User @relation(fields: [userId], references: [id])
 
@@ -74,6 +78,22 @@ model AuditLog {
   @@map("audit_logs")
 }
 
+model ApiKey {
+  id          String   @id @default(cuid())
+  userId      String
+  name        String
+  key         String   @unique
+  keyHash     String   @unique
+  lastUsedAt  DateTime?
+  revokedAt   DateTime?
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("api_keys")
+}
+
 model Proposal {
   id          String   @id @default(cuid())
   title       String
@@ -114,4 +134,43 @@ model GovernanceEvent {
   proposal        Proposal? @relation(fields: [proposalId], references: [id])
 
   @@map("governance_events")
+}
+
+// ---------------------------------------------------------------------------
+// Investigation Notes – issue #127
+// ---------------------------------------------------------------------------
+
+model InvestigationNote {
+  id         String   @id @default(cuid())
+  caseId     String
+  authorId   String
+  authorName String
+  title      String?
+  content    String
+  tags       String[]
+  deleted    Boolean  @default(false)
+  deletedAt  DateTime?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  auditEntries NoteAuditLog[]
+
+  @@index([caseId])
+  @@map("investigation_notes")
+}
+
+model NoteAuditLog {
+  id             String   @id @default(cuid())
+  noteId         String
+  action         String   // "created" | "updated" | "deleted"
+  actorId        String
+  actorName      String
+  previousValues Json?
+  newValues      Json
+  timestamp      DateTime @default(now())
+
+  note InvestigationNote @relation(fields: [noteId], references: [id])
+
+  @@index([noteId])
+  @@map("note_audit_logs")
 }

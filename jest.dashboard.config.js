@@ -10,21 +10,24 @@ module.exports = {
     '<rootDir>/apps/web/**/*.spec.ts',
   ],
   transform: {
-    '^.+\\.(ts|tsx)$': ['ts-jest', {
-      tsconfig: {
-        module: 'commonjs',
-        jsx: 'react-jsx',
-        esModuleInterop: true,
-        strict: true,
-        skipLibCheck: true,
-        types: ['jest', 'node'],
-        // Treat CSS imports as any — they are mocked anyway
-        paths: {},
+    '^.+\\.(ts|tsx)$': [
+      'ts-jest',
+      {
+        tsconfig: {
+          module: 'commonjs',
+          jsx: 'react-jsx',
+          esModuleInterop: true,
+          strict: true,
+          skipLibCheck: true,
+          types: ['jest', 'node'],
+          // Treat CSS imports as any — they are mocked anyway
+          paths: {},
+        },
+        diagnostics: {
+          ignoreCodes: ['TS2882', 'TS7016'],
+        },
       },
-      diagnostics: {
-        ignoreCodes: ['TS2882', 'TS7016'],
-      },
-    }],
+    ],
   },
   moduleNameMapper: {
     '\\.css$': '<rootDir>/test/__mocks__/styleMock.js',

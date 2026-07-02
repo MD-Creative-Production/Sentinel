@@ -5,10 +5,12 @@ This project uses GitHub Actions to automate code quality checks, testing, and b
 ## Workflows Overview
 
 ### 1. CI Workflow (`ci.yml`)
+
 **Triggers:** On push to `main`/`develop` and all pull requests  
 **Purpose:** Validates code quality, runs tests, and verifies builds
 
 **Jobs:**
+
 - **Linting** (`lint`)
   - Runs on Node 20.x and 22.x
   - Executes ESLint checks
@@ -39,10 +41,12 @@ This project uses GitHub Actions to automate code quality checks, testing, and b
   - Prevents merge if any job fails
 
 ### 2. Code Quality & Security Workflow (`code-quality.yml`)
+
 **Triggers:** On push, pull requests, and daily schedule (2 AM UTC)  
 **Purpose:** Analyzes code quality and security vulnerabilities
 
 **Jobs:**
+
 - **Code Quality Analysis** (`code-quality`)
   - Lists dependencies
   - Checks for unused packages
@@ -100,16 +104,16 @@ chmod +x .git/hooks/pre-commit
 
 ### NPM Scripts
 
-| Script | Purpose |
-|--------|---------|
-| `npm run build` | Compile TypeScript to JavaScript |
-| `npm run lint` | Check code with ESLint |
-| `npm run lint:fix` | Fix linting issues automatically |
-| `npm run format` | Format code with Prettier |
-| `npm run format:check` | Check if code matches Prettier rules |
-| `npm test` | Run test suite |
-| `npm run test:ci` | Run tests in CI mode with coverage |
-| `npm run prisma:generate` | Generate Prisma client |
+| Script                    | Purpose                              |
+| ------------------------- | ------------------------------------ |
+| `npm run build`           | Compile TypeScript to JavaScript     |
+| `npm run lint`            | Check code with ESLint               |
+| `npm run lint:fix`        | Fix linting issues automatically     |
+| `npm run format`          | Format code with Prettier            |
+| `npm run format:check`    | Check if code matches Prettier rules |
+| `npm test`                | Run test suite                       |
+| `npm run test:ci`         | Run tests in CI mode with coverage   |
+| `npm run prisma:generate` | Generate Prisma client               |
 
 ## Pull Request Requirements
 
@@ -119,11 +123,12 @@ Before a pull request can be merged, all of the following must pass:
 ✅ **Formatting** - Code matches Prettier rules  
 ✅ **Build** - TypeScript compilation succeeds  
 ✅ **Tests** - All tests pass  
-✅ **Docker Build** - Dockerfile builds without errors  
+✅ **Docker Build** - Dockerfile builds without errors
 
 ## GitHub PR Template
 
 A PR template is provided at `.github/PULL_REQUEST_TEMPLATE.md` to guide contributors. It includes:
+
 - Change description
 - Type of change
 - Related issues
@@ -133,38 +138,50 @@ A PR template is provided at `.github/PULL_REQUEST_TEMPLATE.md` to guide contrib
 ## Troubleshooting
 
 ### Build fails with "command not found"
+
 Ensure dependencies are installed:
+
 ```bash
 npm ci
 ```
 
 ### Linting fails locally but not in CI
+
 Make sure you're on the same Node version as CI (check `.github/workflows/ci.yml`):
+
 ```bash
 node --version  # Should be v20.x or v22.x
 nvm use 22      # Switch to Node 22
 ```
 
 ### ESLint errors
+
 Fix automatically:
+
 ```bash
 npm run lint:fix
 ```
 
 ### Prettier formatting issues
+
 Format entire codebase:
+
 ```bash
 npm run format
 ```
 
 ### Prisma generation fails
+
 Regenerate Prisma client:
+
 ```bash
 npm run prisma:generate
 ```
 
 ### Tests fail in CI but pass locally
+
 Check if services (PostgreSQL, Redis) are running:
+
 ```bash
 docker-compose up -d postgres redis
 npm test
@@ -189,10 +206,10 @@ Add this to your README to show CI status:
 
 CI jobs use the following environment variables:
 
-| Variable | Value | Purpose |
-|----------|-------|---------|
+| Variable       | Value                                                         | Purpose                  |
+| -------------- | ------------------------------------------------------------- | ------------------------ |
 | `DATABASE_URL` | `postgresql://test_user:test_password@localhost:5432/test_db` | Test database connection |
-| `REDIS_URL` | `redis://localhost:6379` | Test Redis connection |
+| `REDIS_URL`    | `redis://localhost:6379`                                      | Test Redis connection    |
 
 ## Performance Notes
 
@@ -204,19 +221,24 @@ CI jobs use the following environment variables:
 ## Maintenance
 
 ### Update Node versions
+
 Edit `.github/workflows/*.yml` and update:
+
 ```yaml
 matrix:
-  node-version: [20.x, 22.x]  # Update here
+  node-version: [20.x, 22.x] # Update here
 ```
 
 ### Update dependencies
+
 Keep ESLint, Prettier, and TypeScript packages up to date:
+
 ```bash
 npm update @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint prettier
 ```
 
 ### Adding new checks
+
 Create new workflow files in `.github/workflows/` following the same pattern.
 
 ## Next Steps
@@ -230,6 +252,7 @@ Create new workflow files in `.github/workflows/` following the same pattern.
 ## Support
 
 For issues with CI:
+
 1. Check workflow logs in GitHub Actions tab
 2. Review this documentation
 3. Test locally with same Node version

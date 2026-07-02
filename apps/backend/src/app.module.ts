@@ -9,7 +9,14 @@ import { GovernanceModule } from './modules/governance/governance.module';
 import { SiemModule } from './integrations/siem/siem.module';
 import { ChainsModule } from './modules/chains/chains.module';
 import { RiskAnalyzerModule } from './modules/soroban/risk/risk-analyzer.module';
+
 import { ProtocolHealthModule } from './modules/protocols/health/protocol-health.module';
+import { NotesModule } from './modules/cases/notes/notes.module';
+import { AlertsModule } from './modules/alerts/alerts.module';
+
+import { ReportsModule } from '../../../src/modules/reports/reports.module';
+import { ProfileModule } from './modules/profile/profile.module';
+
 
 @Module({
   imports: [
@@ -17,12 +24,16 @@ import { ProtocolHealthModule } from './modules/protocols/health/protocol-health
     HealthModule,
     NotificationsModule,
     ReportingModule,
+    ReportsModule,
     DependencyTrackerModule,
     GovernanceModule,
     SiemModule,
     ChainsModule,
     RiskAnalyzerModule,
     ProtocolHealthModule,
+    NotesModule,
+    AlertsModule,
+    ProfileModule,
   ],
   controllers: [AppController],
 })

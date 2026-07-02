@@ -213,23 +213,25 @@ Adapters for external services:
 ## Design Principles
 
 ### 1. Single Responsibility Principle
+
 Each module/service has one reason to change.
 
 ```typescript
 // ✓ Good: Clear responsibility
 class SignatureDetectorService {
-  detectMaliciousSignature(calldata: string): boolean { }
+  detectMaliciousSignature(calldata: string): boolean {}
 }
 
 // ✗ Bad: Multiple responsibilities
 class SignatureService {
-  detectMalicious() { }
-  sendNotification() { }
-  logActivity() { }
+  detectMalicious() {}
+  sendNotification() {}
+  logActivity() {}
 }
 ```
 
 ### 2. Dependency Injection
+
 Use NestJS DI for loose coupling.
 
 ```typescript
@@ -243,6 +245,7 @@ export class AlertService {
 ```
 
 ### 3. Interface Segregation
+
 Small, specific interfaces instead of large monolithic ones.
 
 ```typescript
@@ -255,10 +258,11 @@ interface Healthcheckable {
 }
 
 // Services implement only what they need
-class DiscordService implements Alertable, Healthcheckable { }
+class DiscordService implements Alertable, Healthcheckable {}
 ```
 
 ### 4. Open/Closed Principle
+
 Open for extension, closed for modification.
 
 ```typescript
@@ -273,6 +277,7 @@ class SlackService extends NotificationService {
 ```
 
 ### 5. Dependency Inversion
+
 Depend on abstractions, not concrete implementations.
 
 ```typescript
@@ -341,14 +346,14 @@ CACHE_KEYS = {
   SIGNATURES: 'signatures:all',
   ALERT_RULES: 'alert_rules:active',
   USER_PREFERENCES: 'user:preferences:{userId}',
-}
+};
 
 // Cache TTL values
 CACHE_TTL = {
-  SIGNATURES: 3600,        // 1 hour
-  ALERT_RULES: 1800,       // 30 minutes
-  USER_PREFERENCES: 7200,  // 2 hours
-}
+  SIGNATURES: 3600, // 1 hour
+  ALERT_RULES: 1800, // 30 minutes
+  USER_PREFERENCES: 7200, // 2 hours
+};
 ```
 
 ## Error Handling
@@ -362,13 +367,21 @@ abstract class SentinelException extends Error {
 }
 
 export class SignatureNotFoundException extends SentinelException {
-  getStatus() { return 404; }
-  getErrorCode() { return 'SIGNATURE_NOT_FOUND'; }
+  getStatus() {
+    return 404;
+  }
+  getErrorCode() {
+    return 'SIGNATURE_NOT_FOUND';
+  }
 }
 
 export class InvalidAlertRuleException extends SentinelException {
-  getStatus() { return 400; }
-  getErrorCode() { return 'INVALID_ALERT_RULE'; }
+  getStatus() {
+    return 400;
+  }
+  getErrorCode() {
+    return 'INVALID_ALERT_RULE';
+  }
 }
 ```
 
@@ -388,6 +401,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
 ## Authentication & Authorization
 
 ### API Key Authentication
+
 ```typescript
 @Injectable()
 export class ApiKeyGuard implements CanActivate {
@@ -398,6 +412,7 @@ export class ApiKeyGuard implements CanActivate {
 ```
 
 ### Role-Based Access Control
+
 ```typescript
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -428,31 +443,35 @@ async createAlert(dto: CreateAlertDto) {
 ### Logging Levels
 
 ```typescript
-Logger.log()     // Info level
-Logger.warn()    // Warning level
-Logger.error()   // Error level
-Logger.debug()   // Debug level (dev only)
-Logger.verbose() // Detailed traces
+Logger.log(); // Info level
+Logger.warn(); // Warning level
+Logger.error(); // Error level
+Logger.debug(); // Debug level (dev only)
+Logger.verbose(); // Detailed traces
 ```
 
 ## Testing Strategy
 
 ### Unit Tests
+
 - Test services in isolation
 - Mock dependencies
 - Focus on business logic
 
 ### Integration Tests
+
 - Test module interactions
 - Use test database
 - Validate data flows
 
 ### E2E Tests
+
 - Test complete workflows
 - Full stack testing
 - Docker-based test environment
 
 ### Test Structure
+
 ```
 src/
 ├── modules/
@@ -466,16 +485,19 @@ src/
 ## Performance Considerations
 
 ### Caching Strategy
+
 - Cache malicious signatures (static)
 - Cache alert rules (TTL-based)
 - User preferences (session-based)
 
 ### Database Optimization
+
 - Indices on frequently queried columns
 - Pagination for list endpoints
 - Connection pooling
 
 ### Async Processing
+
 ```typescript
 // Use queues for heavy operations
 this.auditQueue.add({ action: 'ALERT_CREATED', data: alert });
@@ -484,16 +506,19 @@ this.auditQueue.add({ action: 'ALERT_CREATED', data: alert });
 ## Scaling Considerations
 
 ### Horizontal Scaling
+
 - Stateless services
 - Load balancer (nginx/Traefik)
 - Shared PostgreSQL & Redis
 
 ### Vertical Scaling
+
 - Increase Node.js memory
 - Optimize database queries
 - Implement caching effectively
 
 ### Multi-Tenancy (Future)
+
 - Isolate data by tenant
 - Separate webhook namespaces
 - Per-tenant rate limiting
@@ -512,17 +537,20 @@ this.auditQueue.add({ action: 'ALERT_CREATED', data: alert });
 ## Deployment Considerations
 
 ### Docker
+
 - Multi-stage builds for optimization
 - Non-root user execution
 - Health checks configured
 
 ### Kubernetes (Future)
+
 - Stateless service design
 - ConfigMaps for configuration
 - Secrets for sensitive data
 - Resource limits defined
 
 ### CI/CD Pipeline
+
 - Linting and type checking
 - Automated testing
 - Build verification

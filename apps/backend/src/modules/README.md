@@ -28,14 +28,17 @@ module-name/
 ## Available Modules
 
 ### Alerts Module (`alerts/`)
+
 **Purpose**: Manage alert rules, thresholds, and alert triggering logic.
 
 **Key Files**:
+
 - `AlertRule` entity - Define alert rules
 - `AlertService` - Create, update, manage alerts
 - `AlertController` - HTTP endpoints for alerts
 
 **Responsibilities**:
+
 - CRUD operations for alert rules
 - Alert rule validation
 - Alert state management
@@ -44,14 +47,17 @@ module-name/
 **Related**: Integrations (Discord, Telegram, PagerDuty)
 
 ### Monitoring Module (`monitoring/`)
+
 **Purpose**: Real-time mempool monitoring and transaction tracking.
 
 **Key Files**:
+
 - `MemPoolMonitor` service - Track pending transactions
 - `TransactionScanner` service - Scan for malicious patterns
 - `MonitoringService` - Orchestrate monitoring operations
 
 **Responsibilities**:
+
 - Connect to blockchain providers
 - Poll mempool for new transactions
 - Filter transactions by criteria
@@ -61,14 +67,17 @@ module-name/
 **Related**: Signatures, Alerts, Blockchain Integration
 
 ### Signatures Module (`signatures/`)
+
 **Purpose**: Detect malicious function signatures in transactions.
 
 **Key Files**:
+
 - `Signature` entity - Store signature patterns
 - `SignatureDetector` service - Identify malicious signatures
 - `SignatureManager` service - Manage signature database
 
 **Responsibilities**:
+
 - Maintain database of malicious signatures
 - Parse transaction calldata
 - Detect matching signatures
@@ -77,14 +86,17 @@ module-name/
 **Related**: Monitoring, Alerts
 
 ### Webhooks Module (`webhooks/`)
+
 **Purpose**: Handle emergency pause and circuit breaker webhooks.
 
 **Key Files**:
+
 - `Webhook` entity - Store webhook endpoints
 - `WebhookManager` service - Manage webhook subscriptions
 - `CircuitBreaker` service - Execute emergency actions
 
 **Responsibilities**:
+
 - Register webhook endpoints
 - Trigger webhooks on alerts
 - Handle webhook retries
@@ -94,14 +106,17 @@ module-name/
 **Related**: Alerts, Audit Log
 
 ### Audit Log Module (`audit-log/`)
+
 **Purpose**: Track all system activities and changes for compliance.
 
 **Key Files**:
+
 - `AuditLog` entity - Store audit records
 - `AuditLogger` service - Log activities
 - `AuditLogService` - Query audit logs
 
 **Responsibilities**:
+
 - Log all alerts triggered
 - Track webhook executions
 - Record configuration changes
@@ -111,13 +126,16 @@ module-name/
 **Related**: All modules (cross-cutting)
 
 ### Health Module (`health/`)
+
 **Purpose**: Service health checks and status reporting.
 
 **Key Files**:
+
 - `HealthController` - Expose health endpoints
 - `HealthService` - Check service dependencies
 
 **Responsibilities**:
+
 - PostgreSQL connectivity
 - Redis connectivity
 - Blockchain RPC availability

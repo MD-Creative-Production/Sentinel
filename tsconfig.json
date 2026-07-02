@@ -13,12 +13,13 @@
     "resolveJsonModule": true,
     "outDir": "./dist",
     "rootDir": "./",
+    "types": ["node", "jest"],
     "paths": {
       "@common/*": ["./apps/backend/src/common/*"],
       "@modules/*": ["./apps/backend/src/modules/*"],
       "@integrations/*": ["./apps/backend/src/integrations/*"]
     }
   },
-  "include": ["apps/backend/**/*", "libs/**/*", "database/**/*"],
+  "include": ["apps/backend/**/*", "libs/**/*", "database/**/*", "prisma.config.ts"],
   "exclude": ["node_modules", "dist", "apps/dashboard"]
 }

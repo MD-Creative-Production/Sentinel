@@ -5,18 +5,21 @@ module.exports = {
   rootDir: '.',
   testMatch: ['<rootDir>/apps/backend/**/*.spec.ts', '<rootDir>/src/**/*.spec.ts'],
   transform: {
-    '^.+\\.ts$': ['ts-jest', {
-      tsconfig: {
-        module: 'commonjs',
-        esModuleInterop: true,
-        experimentalDecorators: true,
-        emitDecoratorMetadata: true,
-        strict: true,
-        skipLibCheck: true,
-        ignoreDeprecations: '6.0',
-        types: ['jest', 'node'],
+    '^.+\\.ts$': [
+      'ts-jest',
+      {
+        tsconfig: {
+          module: 'commonjs',
+          esModuleInterop: true,
+          experimentalDecorators: true,
+          emitDecoratorMetadata: true,
+          strict: true,
+          skipLibCheck: true,
+          ignoreDeprecations: '6.0',
+          types: ['jest', 'node'],
+        },
       },
-    }],
+    ],
   },
   moduleNameMapper: {
     '^@common/(.*)$': '<rootDir>/apps/backend/src/common/$1',

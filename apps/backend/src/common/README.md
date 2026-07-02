@@ -20,9 +20,11 @@ common/
 ## Components
 
 ### Decorators (`decorators/`)
+
 Custom NestJS decorators for cross-cutting concerns.
 
 **Examples**:
+
 ```typescript
 // Custom parameter decorators
 @CurrentUser()
@@ -38,9 +40,11 @@ Custom NestJS decorators for cross-cutting concerns.
 ```
 
 ### Filters (`filters/`)
+
 HTTP exception and error handling filters.
 
 **Files**:
+
 - `http-exception.filter.ts` - Handle HTTP exceptions
 - `all-exceptions.filter.ts` - Global exception handler
 - `validation.filter.ts` - Validation error formatting
@@ -48,9 +52,11 @@ HTTP exception and error handling filters.
 **Purpose**: Standardize error responses across API
 
 ### Guards (`guards/`)
+
 Authentication and authorization guards.
 
 **Files**:
+
 - `api-key.guard.ts` - API key validation
 - `jwt.guard.ts` - JWT token validation
 - `role.guard.ts` - Role-based access control
@@ -59,9 +65,11 @@ Authentication and authorization guards.
 **Purpose**: Protect endpoints from unauthorized access
 
 ### Pipes (`pipes/`)
+
 Data validation and transformation pipes.
 
 **Files**:
+
 - `validation.pipe.ts` - DTO validation
 - `parse-enum.pipe.ts` - Enum parsing
 - `parse-int.pipe.ts` - Integer parsing
@@ -70,9 +78,11 @@ Data validation and transformation pipes.
 **Purpose**: Validate and transform incoming data
 
 ### Interfaces (`interfaces/`)
+
 Shared TypeScript interfaces and types.
 
 **Files**:
+
 - `alert.interface.ts` - Alert-related types
 - `transaction.interface.ts` - Transaction types
 - `webhook.interface.ts` - Webhook types
@@ -82,9 +92,11 @@ Shared TypeScript interfaces and types.
 **Purpose**: Ensure type consistency across codebase
 
 ### Utils (`utils/`)
+
 Helper functions and utilities.
 
 **Files**:
+
 - `crypto.util.ts` - Cryptographic functions
 - `validation.util.ts` - Validation helpers
 - `format.util.ts` - Data formatting
@@ -94,9 +106,11 @@ Helper functions and utilities.
 **Purpose**: Reusable utility functions
 
 ### Constants (`constants/`)
+
 Shared constants and enumerations.
 
 **Files**:
+
 - `alert-types.constant.ts` - Alert type enums
 - `error-codes.constant.ts` - Error code definitions
 - `network-names.constant.ts` - Supported networks
@@ -106,9 +120,11 @@ Shared constants and enumerations.
 **Purpose**: Centralize constant values
 
 ### Middleware (`middleware/`)
+
 Express middleware for request/response processing.
 
 **Files**:
+
 - `logging.middleware.ts` - Request/response logging
 - `correlation-id.middleware.ts` - Add correlation IDs
 - `request-timeout.middleware.ts` - Request timeouts
@@ -119,6 +135,7 @@ Express middleware for request/response processing.
 ## Usage Examples
 
 ### Using Decorators
+
 ```typescript
 @Controller('alerts')
 @UseGuards(JwtGuard)
@@ -133,6 +150,7 @@ export class AlertController {
 ```
 
 ### Using Guards
+
 ```typescript
 @Controller('admin')
 @UseGuards(JwtGuard, RoleGuard)
@@ -146,6 +164,7 @@ export class AdminController {
 ```
 
 ### Using Pipes
+
 ```typescript
 @Controller('transactions')
 export class TransactionController {
@@ -161,6 +180,7 @@ export class TransactionController {
 ```
 
 ### Using Interfaces
+
 ```typescript
 import { AlertResponse, TransactionInfo, WebhookPayload } from '@common/interfaces';
 
@@ -172,6 +192,7 @@ export class AlertService {
 ```
 
 ### Using Utils
+
 ```typescript
 import { formatAddress, parseCalldata, validateSignature } from '@common/utils';
 
@@ -185,6 +206,7 @@ export class SignatureService {
 ```
 
 ### Using Constants
+
 ```typescript
 import { ALERT_TYPES, ERROR_CODES, NETWORK_NAMES } from '@common/constants';
 
@@ -224,6 +246,7 @@ For easier imports, use path aliases in `tsconfig.json`:
 ```
 
 Usage:
+
 ```typescript
 // Instead of: import { ... } from '../../../common/utils'
 import { ... } from '@common/utils';
@@ -239,6 +262,7 @@ import { AlertService } from '@modules/alerts/services/alert.service';
 5. Add unit tests in `__tests__` directory
 
 Example:
+
 ```typescript
 // common/utils/index.ts
 export * from './crypto.util';

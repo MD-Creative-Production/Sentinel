@@ -30,9 +30,11 @@ integration-name/
 ## Available Integrations
 
 ### Discord Integration (`discord/`)
+
 **Purpose**: Send real-time alerts to Discord channels via webhooks.
 
 **Features**:
+
 - Webhook-based message delivery
 - Rich embeds for alert details
 - Retry logic for failed deliveries
@@ -40,6 +42,7 @@ integration-name/
 - Thread support for alert discussions
 
 **Configuration**:
+
 ```env
 DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/...
 DISCORD_TIMEOUT=5000
@@ -47,10 +50,11 @@ DISCORD_RETRY_ATTEMPTS=3
 ```
 
 **Usage**:
+
 ```typescript
 export class AlertService {
   constructor(private discordService: DiscordService) {}
-  
+
   async alertThreat(threat: Threat) {
     await this.discordService.sendAlert({
       title: 'Malicious Activity Detected',
@@ -63,9 +67,11 @@ export class AlertService {
 ```
 
 ### Telegram Integration (`telegram/`)
+
 **Purpose**: Send alerts to Telegram channels and direct messages.
 
 **Features**:
+
 - Bot token authentication
 - Channel and private chat support
 - Formatted messages with markdown
@@ -74,6 +80,7 @@ export class AlertService {
 - Rate limiting support
 
 **Configuration**:
+
 ```env
 TELEGRAM_BOT_TOKEN=123456:ABC-DEF...
 TELEGRAM_CHAT_ID=-1001234567890
@@ -81,16 +88,19 @@ TELEGRAM_TIMEOUT=5000
 ```
 
 **Usage**:
+
 ```typescript
 await this.telegramService.sendAlert(
-  'High severity alert: Possible rug pull detected in token contract'
+  'High severity alert: Possible rug pull detected in token contract',
 );
 ```
 
 ### Blockchain Integration (`blockchain/`)
+
 **Purpose**: Connect to blockchain networks (Stellar, EVM) for mempool monitoring.
 
 **Features**:
+
 - Multi-network support (Stellar Soroban, Ethereum, etc.)
 - RPC provider management
 - Transaction monitoring
@@ -99,6 +109,7 @@ await this.telegramService.sendAlert(
 - Network failover
 
 **Configuration**:
+
 ```env
 STELLAR_RPC_URL=https://soroban-mainnet.stellar.org
 ETHEREUM_RPC_URL=https://eth-mainnet.infura.io/v3/...
@@ -107,13 +118,14 @@ NETWORK_TIMEOUT=10000
 ```
 
 **Usage**:
+
 ```typescript
 export class MonitoringService {
   constructor(private blockchainService: BlockchainService) {}
-  
+
   async startMonitoring() {
     const provider = this.blockchainService.getProvider('ethereum');
-    provider.on('pending', (txHash) => {
+    provider.on('pending', txHash => {
       // Process pending transaction
     });
   }
@@ -121,9 +133,11 @@ export class MonitoringService {
 ```
 
 ### PagerDuty Integration (`pagerduty/`)
+
 **Purpose**: Escalate critical alerts to PagerDuty for incident management.
 
 **Features**:
+
 - Event API integration
 - Incident creation and updates
 - Severity-based routing
@@ -131,6 +145,7 @@ export class MonitoringService {
 - Acknowledgment tracking
 
 **Configuration**:
+
 ```env
 PAGERDUTY_API_KEY=...
 PAGERDUTY_SERVICE_ID=...
@@ -138,6 +153,7 @@ PAGERDUTY_ESCALATION_POLICY_ID=...
 ```
 
 **Usage**:
+
 ```typescript
 if (threat.severity === 'critical') {
   await this.pagerDutyService.createIncident({
@@ -168,7 +184,7 @@ async isHealthy(): Promise<boolean> {
   // Verify webhook is accessible
 }
 
-// BlockchainService  
+// BlockchainService
 async isHealthy(): Promise<boolean> {
   // Verify RPC connection
 }

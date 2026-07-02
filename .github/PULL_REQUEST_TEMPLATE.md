@@ -1,7 +1,9 @@
 ## Description
+
 <!-- Provide a brief description of your changes -->
 
 ## Type of Change
+
 <!-- Mark the relevant option with an "x" -->
 
 - [ ] Bug fix (non-breaking change which fixes an issue)
@@ -10,16 +12,20 @@
 - [ ] Documentation update
 
 ## Related Issues
+
 <!-- Link related issues using # -->
+
 Fixes #
 Related to #
 
 ## Changes Made
+
 <!-- List the specific changes you made -->
 
-- 
+-
 
 ## Testing
+
 <!-- Describe the tests you've run and how to reproduce them -->
 
 - [ ] I have tested these changes locally
@@ -29,6 +35,7 @@ Related to #
 - [ ] TypeScript builds successfully (`npm run build`)
 
 ## Checklist
+
 <!-- Ensure all items are checked before submitting -->
 
 - [ ] My code follows the style guidelines of this project
@@ -40,7 +47,9 @@ Related to #
 - [ ] New and existing unit tests passed with my changes
 
 ## Screenshots (if applicable)
+
 <!-- Add screenshots for UI changes -->
 
 ## Additional Context
+
 <!-- Add any other context about the PR -->

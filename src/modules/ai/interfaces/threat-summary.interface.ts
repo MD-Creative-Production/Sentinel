@@ -8,5 +8,5 @@ export interface ThreatSummary {
   indicators?: string[];
   recommendedActions?: string[];
   confidence?: number; // 0..1
-  raw?: any;
+  raw?: unknown;
 }

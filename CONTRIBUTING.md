@@ -102,14 +102,14 @@ We use a **feature-branch** workflow based off `main`.
 
 ### Branch Naming
 
-| Prefix      | Purpose                           | Example                          |
-| ----------- | --------------------------------- | -------------------------------- |
-| `feat/`     | New features                      | `feat/mempool-alert-engine`      |
-| `fix/`      | Bug fixes                         | `fix/discord-webhook-timeout`    |
-| `docs/`     | Documentation only                | `docs/api-reference`             |
-| `refactor/` | Code refactoring                  | `refactor/notification-service`  |
-| `test/`     | Adding or updating tests          | `test/watchlist-module`          |
-| `chore/`    | Tooling, CI, dependencies         | `chore/update-prisma-schema`     |
+| Prefix      | Purpose                   | Example                         |
+| ----------- | ------------------------- | ------------------------------- |
+| `feat/`     | New features              | `feat/mempool-alert-engine`     |
+| `fix/`      | Bug fixes                 | `fix/discord-webhook-timeout`   |
+| `docs/`     | Documentation only        | `docs/api-reference`            |
+| `refactor/` | Code refactoring          | `refactor/notification-service` |
+| `test/`     | Adding or updating tests  | `test/watchlist-module`         |
+| `chore/`    | Tooling, CI, dependencies | `chore/update-prisma-schema`    |
 
 ### Rules
 

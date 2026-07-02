@@ -15,11 +15,11 @@ The observability module integrates [OpenTelemetry](https://opentelemetry.io/) t
 
 Configure tracing via environment variables:
 
-| Variable            | Description                           | Default     |
-| ------------------- | ------------------------------------- | ----------- |
-| `OTEL_ENABLED`      | Enable/disable tracing                | `true`      |
-| `OTEL_EXPORTER_URL` | OTLP collector endpoint               | (none)      |
-| `OTEL_SERVICE_NAME` | Service name reported in traces       | `sentinel`  |
+| Variable            | Description                     | Default    |
+| ------------------- | ------------------------------- | ---------- |
+| `OTEL_ENABLED`      | Enable/disable tracing          | `true`     |
+| `OTEL_EXPORTER_URL` | OTLP collector endpoint         | (none)     |
+| `OTEL_SERVICE_NAME` | Service name reported in traces | `sentinel` |
 
 ## Usage
 

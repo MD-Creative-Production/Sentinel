@@ -17,6 +17,15 @@
     "test:ci": "npm run test -- --ci --coverage",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
+    "prisma:migrate:deploy": "prisma migrate deploy",
+    "prisma:migrate:status": "prisma migrate status",
+    "prisma:migrate:reset": "prisma migrate reset",
+    "prisma:studio": "prisma studio",
+    "db:migrate": "bash scripts/migrate.sh deploy",
+    "db:migrate:dev": "bash scripts/migrate-dev.sh",
+    "db:migrate:new": "bash scripts/migrate.sh create-only",
+    "db:status": "bash scripts/migrate.sh status",
+    "db:rollback:guide": "bash scripts/rollback.sh",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
     "docker:logs": "docker-compose logs -f",
@@ -43,6 +52,8 @@
   },
   "homepage": "https://github.com/sentinel-security-productions/Sentinel#readme",
   "dependencies": {
+    "@nestjs/common": "^11.1.27",
+    "@nestjs/core": "^11.1.27",
     "@nestjs/typeorm": "^11.0.1",
     "@opentelemetry/api": "^1.9.1",
     "@opentelemetry/exporter-trace-otlp-http": "^0.219.0",
@@ -53,9 +64,10 @@
     "@opentelemetry/sdk-trace-node": "^2.8.0",
     "@opentelemetry/semantic-conventions": "^1.41.1",
     "@prisma/client": "^7.8.0",
-    "@types/node": "^25.9.3",
     "@types/react": "^19.2.17",
     "axios": "^1.17.0",
+    "ethers": "^6.17.0",
+    "pdfkit": "^0.19.1",
     "pg": "^8.21.0",
     "react": "^19.2.7",
     "typeorm": "^1.0.0",
@@ -78,6 +90,8 @@
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^30.0.0",
+    "@types/node": "^26.0.0",
+    "@types/pdfkit": "^0.17.6",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
     "eslint": "^8.50.0",
@@ -92,5 +106,13 @@
     "reflect-metadata": "^0.2.2",
     "ts-jest": "^29.4.11",
     "typescript": "^6.0.3"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/__tests__/**/*.test.ts",
+      "**/tests/**/*.test.ts"
+    ]
   }
 }
