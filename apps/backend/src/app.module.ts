@@ -14,6 +14,8 @@ import { AlertsModule } from './modules/alerts/alerts.module';
 
 import { ReportsModule } from '../../../src/modules/reports/reports.module';
 import { ProfileModule } from './modules/profile/profile.module';
+import { IncidentsModule } from '../../../src/modules/incidents/incidents.module';
+import { ProtocolHealthModule } from '../../../src/modules/protocol-health/protocol-health.module';
 
 @Module({
   imports: [
@@ -30,6 +32,8 @@ import { ProfileModule } from './modules/profile/profile.module';
     NotesModule,
     AlertsModule,
     ProfileModule,
+    IncidentsModule,
+    ProtocolHealthModule,
   ],
   controllers: [AppController],
 })
