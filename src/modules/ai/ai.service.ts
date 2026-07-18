@@ -4,12 +4,15 @@ import { ThreatSummary, Severity } from './interfaces/threat-summary.interface';
 export class AIService {
   constructor(private providers: AIProvider[] = []) {}
 
-  async summarize(event: any): Promise<ThreatSummary[]> {
+  // The service accepts unknown external events; providers are responsible for
+  // narrowing/validating the shape before use. This keeps the service flexible
+  // while avoiding unsafe `any` usage.
+  async summarize(event: unknown): Promise<ThreatSummary[]> {
     const results = await Promise.all(this.providers.map(p => p.analyzeThreat(event)));
     return results;
   }
 
-  async bestSummary(event: any): Promise<ThreatSummary | null> {
+  async bestSummary(event: unknown): Promise<ThreatSummary | null> {
     const summaries = await this.summarize(event);
     if (summaries.length === 0) return null;
 

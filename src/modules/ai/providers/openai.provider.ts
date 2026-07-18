@@ -5,15 +5,14 @@ export class OpenAIProvider implements AIProvider {
   name = 'openai';
   constructor(private apiKey: string) {}
 
-  async analyzeThreat(event: any): Promise<ThreatSummary> {
-    // Minimal, efficient implementation: lightweight local heuristic + optional remote call.
-    // For now provide a deterministic lightweight summary so the framework is usable without network.
+  async analyzeThreat(event: unknown): Promise<ThreatSummary> {
+    // Narrow the external event safely using lightweight guards below.
+    const e = this.normalizeEvent(event);
 
-    const title = event.title || event.alert || 'Security event';
-    const description = event.description || JSON.stringify(event).slice(0, 200);
+    const title = e.title ?? e.alert ?? 'Security event';
+    const description = e.description ?? safeStringify(e).slice(0, 200);
 
-    // Simple heuristic severity mapping
-    const severity = this.heuristicSeverity(event);
+    const severity = this.heuristicSeverity(e);
     const score = this.heuristicScore(severity);
 
     return {
@@ -21,7 +20,7 @@ export class OpenAIProvider implements AIProvider {
       description,
       severity,
       score,
-      indicators: this.extractIndicators(event),
+      indicators: this.extractIndicators(e),
       recommendedActions: this.suggestRemediations(severity),
       confidence: 0.5,
       raw: event,
@@ -29,12 +28,21 @@ export class OpenAIProvider implements AIProvider {
   }
 
   async healthCheck(): Promise<boolean> {
-    // If API key configured, assume provider can be used; otherwise still usable in local-only mode.
     return typeof this.apiKey === 'string' && this.apiKey.length > 0;
   }
 
-  private heuristicSeverity(event: any): 'low' | 'medium' | 'high' | 'critical' {
-    const s = (event.severity || '').toString().toLowerCase();
+  // Lightweight event normalization: ensure we have an object with string keys.
+  private normalizeEvent(event: unknown): Record<string, unknown> {
+    if (event && typeof event === 'object' && !Array.isArray(event))
+      return event as Record<string, unknown>;
+    return { raw: event };
+  }
+
+  private heuristicSeverity(
+    event: Record<string, unknown>,
+  ): 'low' | 'medium' | 'high' | 'critical' {
+    const raw = event['severity'];
+    const s = (typeof raw === 'string' ? raw : String(raw || '')).toLowerCase();
     if (s.includes('crit') || s === '4') return 'critical';
     if (s.includes('high') || s === '3') return 'high';
     if (s.includes('medium') || s === '2') return 'medium';
@@ -54,11 +62,16 @@ export class OpenAIProvider implements AIProvider {
     }
   }
 
-  private extractIndicators(event: any): string[] {
+  private extractIndicators(event: Record<string, unknown>): string[] {
     const indicators: string[] = [];
-    if (event.ip) indicators.push(`ip:${event.ip}`);
-    if (event.user) indicators.push(`user:${event.user}`);
-    if (event.filename) indicators.push(`file:${event.filename}`);
+    const addIfString = (k: string, prefix: string) => {
+      const v = event[k];
+      if (typeof v === 'string' && v.length > 0) indicators.push(`${prefix}:${v}`);
+    };
+
+    addIfString('ip', 'ip');
+    addIfString('user', 'user');
+    addIfString('filename', 'file');
     return indicators;
   }
 
@@ -72,5 +85,15 @@ export class OpenAIProvider implements AIProvider {
     if (sev === 'high') return ['Block indicators', 'Notify on-call', 'Collect forensic artifacts'];
     if (sev === 'medium') return ['Investigate logs', 'Raise ticket for review'];
     return ['Monitor and gather additional context'];
+  }
+}
+
+// Helper: safe stringify for unknown values
+function safeStringify(v: unknown): string {
+  try {
+    if (typeof v === 'string') return v;
+    return JSON.stringify(v ?? '');
+  } catch {
+    return String(v ?? '');
   }
 }

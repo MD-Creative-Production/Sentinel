@@ -1,10 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+// Use runtime require for PrismaClient to avoid TypeScript type export issues in the
+// environment where the generated client types may not be present during linting.
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { PrismaClient } = require('@prisma/client');
 import { ProposalDto, VoteDto, GovernanceEventDto } from './interfaces/governance.interface';
 
 @Injectable()
 export class GovernanceService {
-  private prisma: PrismaClient;
+  // Prisma client instance - using `any` for the private field to avoid tight coupling
+  // with generated client types during linting/build in different environments.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private prisma: any;
 
   constructor() {
     this.prisma = new PrismaClient();
@@ -62,8 +68,8 @@ export class GovernanceService {
         proposalId: dto.proposalId,
         voter: dto.voter,
         transactionHash: dto.transactionHash,
-        // Prisma expects JSON; cast unknown to any here after validation upstream
-        metadata: (dto.metadata as any) || {},
+        // Prisma expects JSON; use the provided metadata or fall back to empty object
+        metadata: dto.metadata ?? {},
       },
     });
     return event;

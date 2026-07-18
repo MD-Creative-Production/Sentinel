@@ -14,6 +14,7 @@ model User {
   watchlist Watchlist[]
   notificationPreferences NotificationPreference[]
   auditLogs               AuditLog[]
+  apiKeys                 ApiKey[]
 
   @@map("users")
 }
@@ -75,6 +76,22 @@ model AuditLog {
   user User @relation(fields: [userId], references: [id])
 
   @@map("audit_logs")
+}
+
+model ApiKey {
+  id          String   @id @default(cuid())
+  userId      String
+  name        String
+  key         String   @unique
+  keyHash     String   @unique
+  lastUsedAt  DateTime?
+  revokedAt   DateTime?
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("api_keys")
 }
 
 model Proposal {

@@ -2,6 +2,12 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
     // Include root and application-level tsconfigs so ESLint can run type-aware rules
+    project: [
+      'tsconfig.json',
+      'tsconfig.src.json',
+      'apps/dashboard/tsconfig.json',
+      'apps/web/tsconfig.json',
+    ],
     project: ['tsconfig.json', 'apps/dashboard/tsconfig.json', 'apps/web/tsconfig.json'],
     project: ['tsconfig.json'],
     tsconfigRootDir: __dirname,
@@ -25,6 +31,8 @@ module.exports = {
   overrides: [
     {
       // Files that are intentionally outside any tsconfig — lint without type-aware rules
+
+      files: ['observability/**/*.ts', 'prisma/**/*.ts', 'env.d.ts', 'src/**/*.ts', 'src/**/*.tsx'],
       files: ['observability/**/*.ts', 'prisma/**/*.ts', 'env.d.ts'],
       // Files outside all tsconfigs — lint without type-aware rules
       files: [

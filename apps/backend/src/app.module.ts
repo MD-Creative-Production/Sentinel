@@ -12,12 +12,16 @@ import { RiskAnalyzerModule } from './modules/soroban/risk/risk-analyzer.module'
 import { NotesModule } from './modules/cases/notes/notes.module';
 import { AlertsModule } from './modules/alerts/alerts.module';
 
+import { ReportsModule } from '../../../src/modules/reports/reports.module';
+import { ProfileModule } from './modules/profile/profile.module';
+
 @Module({
   imports: [
     DatabaseModule,
     HealthModule,
     NotificationsModule,
     ReportingModule,
+    ReportsModule,
     DependencyTrackerModule,
     GovernanceModule,
     SiemModule,
@@ -25,6 +29,7 @@ import { AlertsModule } from './modules/alerts/alerts.module';
     RiskAnalyzerModule,
     NotesModule,
     AlertsModule,
+    ProfileModule,
   ],
   controllers: [AppController],
 })
