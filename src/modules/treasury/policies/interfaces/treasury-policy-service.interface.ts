@@ -3,7 +3,10 @@ import { TransactionData } from './transaction-data.interface';
 
 export interface ITreasuryPolicyService {
   evaluateTransaction(transaction: TransactionData): Promise<PolicyEvaluationResult[]>;
-  evaluatePoliciesForWallet(walletAddress: string, chainId: number): Promise<PolicyEvaluationResult[]>;
+  evaluatePoliciesForWallet(
+    walletAddress: string,
+    chainId: number,
+  ): Promise<PolicyEvaluationResult[]>;
   getActivePolicies(walletAddress: string, chainId: number): Promise<any[]>;
 }
 

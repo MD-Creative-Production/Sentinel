@@ -36,7 +36,7 @@ export function generateAlertForViolation(violation: PolicyViolationEntity): Ale
 export function formatAlertMessage(alert: AlertData): string {
   const severityEmoji = getSeverityEmoji(alert.severity);
   const title = `${severityEmoji} Treasury Policy Violation: ${alert.policyName}`;
-  
+
   const details = [
     `Wallet: ${alert.walletAddress}`,
     `Chain: ${alert.chainId}`,

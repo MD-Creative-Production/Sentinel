@@ -88,7 +88,10 @@ export class TreasuryPolicyValidator {
       case PolicyType.DailyTransferLimit:
       case PolicyType.HourlyTransferLimit:
       case PolicyType.MaxTransactionCount:
-        if (dto.thresholdType !== ThresholdType.Count && dto.thresholdType !== ThresholdType.FixedAmount) {
+        if (
+          dto.thresholdType !== ThresholdType.Count &&
+          dto.thresholdType !== ThresholdType.FixedAmount
+        ) {
           errors.push(`${dto.policyType} requires threshold type of Count or FixedAmount`);
         }
         break;
@@ -119,7 +122,10 @@ export class TreasuryPolicyValidator {
     return /^0x[a-fA-F0-9]{40}$/.test(address);
   }
 
-  validateThresholdConfig(config: Record<string, unknown> | undefined): { valid: boolean; errors: string[] } {
+  validateThresholdConfig(config: Record<string, unknown> | undefined): {
+    valid: boolean;
+    errors: string[];
+  } {
     const errors: string[] = [];
 
     if (!config) {

@@ -31,7 +31,10 @@ export class TreasuryPolicyRepository {
     return this.policyRepo.save(policy);
   }
 
-  async updatePolicy(id: string, dto: UpdateTreasuryPolicyDto): Promise<TreasuryPolicyEntity | null> {
+  async updatePolicy(
+    id: string,
+    dto: UpdateTreasuryPolicyDto,
+  ): Promise<TreasuryPolicyEntity | null> {
     await this.policyRepo.update(id, dto);
     return this.policyRepo.findOne({ where: { id } });
   }
@@ -45,7 +48,9 @@ export class TreasuryPolicyRepository {
     return this.policyRepo.findOne({ where: { id } });
   }
 
-  async getPolicies(query: TreasuryPolicyQueryDto): Promise<{ items: TreasuryPolicyEntity[]; total: number }> {
+  async getPolicies(
+    query: TreasuryPolicyQueryDto,
+  ): Promise<{ items: TreasuryPolicyEntity[]; total: number }> {
     const qb = this.policyRepo.createQueryBuilder('tp');
 
     if (query.walletAddress) {
@@ -111,7 +116,9 @@ export class TreasuryPolicyRepository {
     return this.violationRepo.findOne({ where: { id } });
   }
 
-  async getViolations(query: ViolationQueryDto): Promise<{ items: PolicyViolationEntity[]; total: number }> {
+  async getViolations(
+    query: ViolationQueryDto,
+  ): Promise<{ items: PolicyViolationEntity[]; total: number }> {
     const qb = this.violationRepo.createQueryBuilder('pv');
 
     if (query.policyId) {
@@ -124,7 +131,9 @@ export class TreasuryPolicyRepository {
       qb.andWhere('pv.chainId = :chainId', { chainId: query.chainId });
     }
     if (query.transactionHash) {
-      qb.andWhere('pv.transactionHash = :transactionHash', { transactionHash: query.transactionHash });
+      qb.andWhere('pv.transactionHash = :transactionHash', {
+        transactionHash: query.transactionHash,
+      });
     }
     if (query.status) {
       qb.andWhere('pv.status = :status', { status: query.status });

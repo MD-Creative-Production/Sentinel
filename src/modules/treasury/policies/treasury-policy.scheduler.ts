@@ -69,7 +69,10 @@ export class TreasuryPolicyScheduler implements ITreasuryPolicyScheduler {
       try {
         await this.monitorWallet(config);
       } catch (error) {
-        this.logger.error(`Error monitoring wallet ${config.walletAddress} on chain ${config.chainId}`, error);
+        this.logger.error(
+          `Error monitoring wallet ${config.walletAddress} on chain ${config.chainId}`,
+          error,
+        );
       }
     }, pollInterval);
 
@@ -79,14 +82,19 @@ export class TreasuryPolicyScheduler implements ITreasuryPolicyScheduler {
   private async monitorWallet(config: TreasuryPolicyConfig): Promise<void> {
     this.logger.debug(`Monitoring wallet ${config.walletAddress} on chain ${config.chainId}`);
 
-    const policies = await this.policyRepository.getActivePolicies(config.walletAddress, config.chainId);
+    const policies = await this.policyRepository.getActivePolicies(
+      config.walletAddress,
+      config.chainId,
+    );
 
     if (policies.length === 0) {
       this.logger.debug(`No active policies for wallet ${config.walletAddress}`);
       return;
     }
 
-    this.logger.debug(`Found ${policies.length} active policies for wallet ${config.walletAddress}`);
+    this.logger.debug(
+      `Found ${policies.length} active policies for wallet ${config.walletAddress}`,
+    );
 
     await this.processUnsentAlerts();
   }

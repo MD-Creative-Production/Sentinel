@@ -12,7 +12,10 @@ export class TreasuryPolicyEngine implements ITreasuryPolicyEngine {
     this.logger = new Logger('TreasuryPolicyEngine');
   }
 
-  async evaluate(transaction: TransactionData, policy: TreasuryPolicyEntity): Promise<PolicyEvaluationResult> {
+  async evaluate(
+    transaction: TransactionData,
+    policy: TreasuryPolicyEntity,
+  ): Promise<PolicyEvaluationResult> {
     this.logger.debug(`Evaluating policy ${policy.policyName} for transaction ${transaction.hash}`);
 
     const result: PolicyEvaluationResult = {
@@ -70,7 +73,10 @@ export class TreasuryPolicyEngine implements ITreasuryPolicyEngine {
     return result;
   }
 
-  async evaluateAll(transaction: TransactionData, policies: TreasuryPolicyEntity[]): Promise<PolicyEvaluationResult[]> {
+  async evaluateAll(
+    transaction: TransactionData,
+    policies: TreasuryPolicyEntity[],
+  ): Promise<PolicyEvaluationResult[]> {
     this.logger.debug(`Evaluating ${policies.length} policies for transaction ${transaction.hash}`);
 
     const results: PolicyEvaluationResult[] = [];
@@ -137,7 +143,11 @@ export class TreasuryPolicyEngine implements ITreasuryPolicyEngine {
     result: PolicyEvaluationResult,
   ): Promise<void> {
     const threshold = BigInt(policy.thresholdValue);
-    const hourlyTotal = await this.calculateTotalTransfersInWindow(policy.walletAddress, policy.chainId, 1);
+    const hourlyTotal = await this.calculateTotalTransfersInWindow(
+      policy.walletAddress,
+      policy.chainId,
+      1,
+    );
 
     if (hourlyTotal > threshold) {
       result.violated = true;
@@ -158,7 +168,11 @@ export class TreasuryPolicyEngine implements ITreasuryPolicyEngine {
     const timeWindow = policy.thresholdConfig?.timeWindow as number | undefined;
     const hours = timeWindow || 24;
 
-    const transactionCount = await this.countTransactionsInWindow(policy.walletAddress, policy.chainId, hours);
+    const transactionCount = await this.countTransactionsInWindow(
+      policy.walletAddress,
+      policy.chainId,
+      hours,
+    );
 
     if (transactionCount > threshold) {
       result.violated = true;
@@ -248,7 +262,11 @@ export class TreasuryPolicyEngine implements ITreasuryPolicyEngine {
     const timeWindow = policy.thresholdConfig?.timeWindow as number | undefined;
     const minutes = timeWindow || 60;
 
-    const transactionCount = await this.countTransactionsInWindow(policy.walletAddress, policy.chainId, minutes / 60);
+    const transactionCount = await this.countTransactionsInWindow(
+      policy.walletAddress,
+      policy.chainId,
+      minutes / 60,
+    );
 
     if (transactionCount > threshold) {
       result.violated = true;
@@ -266,7 +284,11 @@ export class TreasuryPolicyEngine implements ITreasuryPolicyEngine {
     policy: TreasuryPolicyEntity,
     result: PolicyEvaluationResult,
   ): Promise<void> {
-    const isFirstTime = await this.isFirstTimeRecipient(policy.walletAddress, transaction.to, policy.chainId);
+    const isFirstTime = await this.isFirstTimeRecipient(
+      policy.walletAddress,
+      transaction.to,
+      policy.chainId,
+    );
 
     if (isFirstTime) {
       result.violated = true;
@@ -289,7 +311,12 @@ export class TreasuryPolicyEngine implements ITreasuryPolicyEngine {
     }
 
     const transactionTime = transaction.timestamp;
-    const isBusinessHours = this.isWithinBusinessHours(transactionTime, policy.businessHoursStart, policy.businessHoursEnd, policy.timeZone);
+    const isBusinessHours = this.isWithinBusinessHours(
+      transactionTime,
+      policy.businessHoursStart,
+      policy.businessHoursEnd,
+      policy.timeZone,
+    );
 
     if (!isBusinessHours) {
       result.violated = true;
@@ -298,7 +325,10 @@ export class TreasuryPolicyEngine implements ITreasuryPolicyEngine {
       result.observedValue = transactionTime.toISOString();
       result.severity = AlertSeverity.Medium;
       result.recommendedAction = 'Review transaction outside business hours';
-      result.contextData = { transactionTime: transactionTime.toISOString(), timeZone: policy.timeZone };
+      result.contextData = {
+        transactionTime: transactionTime.toISOString(),
+        timeZone: policy.timeZone,
+      };
     }
   }
 
@@ -320,23 +350,35 @@ export class TreasuryPolicyEngine implements ITreasuryPolicyEngine {
     }
   }
 
-  private async calculateTotalTransfersInWindow(walletAddress: string, chainId: number, hours: number): Promise<bigint> {
+  private async calculateTotalTransfersInWindow(
+    _walletAddress: string,
+    _chainId: number,
+    _hours: number,
+  ): Promise<bigint> {
     return BigInt(0);
   }
 
-  private async countTransactionsInWindow(walletAddress: string, chainId: number, hours: number): Promise<number> {
+  private async countTransactionsInWindow(
+    _walletAddress: string,
+    _chainId: number,
+    _hours: number,
+  ): Promise<number> {
     return 0;
   }
 
-  private async isFirstTimeRecipient(walletAddress: string, recipient: string, chainId: number): Promise<boolean> {
+  private async isFirstTimeRecipient(
+    _walletAddress: string,
+    _recipient: string,
+    _chainId: number,
+  ): Promise<boolean> {
     return true;
   }
 
   private isWithinBusinessHours(
-    transactionTime: Date,
-    startTime: string,
-    endTime: string,
-    timeZone: string,
+    _transactionTime: Date,
+    _startTime: string,
+    _endTime: string,
+    _timeZone: string,
   ): boolean {
     return true;
   }

@@ -27,7 +27,10 @@ export class TreasuryPolicyService implements ITreasuryPolicyService {
   async evaluateTransaction(transaction: TransactionData): Promise<PolicyEvaluationResult[]> {
     this.logger.debug(`Evaluating transaction ${transaction.hash} for wallet ${transaction.from}`);
 
-    const policies = await this.policyRepository.getActivePolicies(transaction.from, transaction.chainId);
+    const policies = await this.policyRepository.getActivePolicies(
+      transaction.from,
+      transaction.chainId,
+    );
 
     if (policies.length === 0) {
       this.logger.debug(`No active policies found for wallet ${transaction.from}`);
@@ -45,7 +48,10 @@ export class TreasuryPolicyService implements ITreasuryPolicyService {
     return results;
   }
 
-  async evaluatePoliciesForWallet(walletAddress: string, chainId: number): Promise<PolicyEvaluationResult[]> {
+  async evaluatePoliciesForWallet(
+    walletAddress: string,
+    chainId: number,
+  ): Promise<PolicyEvaluationResult[]> {
     this.logger.debug(`Evaluating policies for wallet ${walletAddress} on chain ${chainId}`);
 
     const policies = await this.policyRepository.getActivePolicies(walletAddress, chainId);
@@ -75,7 +81,10 @@ export class TreasuryPolicyService implements ITreasuryPolicyService {
     return this.policyRepository.getActivePolicies(walletAddress, chainId);
   }
 
-  async createPolicy(dto: CreateTreasuryPolicyDto, createdBy?: string): Promise<TreasuryPolicyEntity> {
+  async createPolicy(
+    dto: CreateTreasuryPolicyDto,
+    createdBy?: string,
+  ): Promise<TreasuryPolicyEntity> {
     const validation = this.validator.validateCreatePolicyDto(dto);
 
     if (!validation.valid) {
@@ -84,7 +93,9 @@ export class TreasuryPolicyService implements ITreasuryPolicyService {
 
     const thresholdConfigValidation = this.validator.validateThresholdConfig(dto.thresholdConfig);
     if (!thresholdConfigValidation.valid) {
-      throw new Error(`Threshold config validation failed: ${thresholdConfigValidation.errors.join(', ')}`);
+      throw new Error(
+        `Threshold config validation failed: ${thresholdConfigValidation.errors.join(', ')}`,
+      );
     }
 
     const policy = await this.policyRepository.createPolicy(dto);
@@ -168,7 +179,9 @@ export class TreasuryPolicyService implements ITreasuryPolicyService {
     return this.policyRepository.getPolicyById(id);
   }
 
-  async getPolicies(query: TreasuryPolicyQueryDto): Promise<{ items: TreasuryPolicyEntity[]; total: number }> {
+  async getPolicies(
+    query: TreasuryPolicyQueryDto,
+  ): Promise<{ items: TreasuryPolicyEntity[]; total: number }> {
     return this.policyRepository.getPolicies(query);
   }
 
@@ -187,7 +200,13 @@ export class TreasuryPolicyService implements ITreasuryPolicyService {
   }
 
   async markAsFalsePositive(id: string, resolvedBy: string, notes?: string): Promise<void> {
-    await this.policyRepository.updateViolationStatus(id, 'FALSE_POSITIVE', undefined, resolvedBy, notes);
+    await this.policyRepository.updateViolationStatus(
+      id,
+      'FALSE_POSITIVE',
+      undefined,
+      resolvedBy,
+      notes,
+    );
     this.logger.info(`Marked violation ${id} as false positive`);
   }
 
@@ -195,7 +214,10 @@ export class TreasuryPolicyService implements ITreasuryPolicyService {
     return this.policyRepository.getAuditLogs(policyId, limit);
   }
 
-  private async createViolationFromResult(result: PolicyEvaluationResult, transaction: TransactionData): Promise<void> {
+  private async createViolationFromResult(
+    result: PolicyEvaluationResult,
+    transaction: TransactionData,
+  ): Promise<void> {
     const violationDto = {
       policyId: result.policyId,
       policyName: result.policyName,
