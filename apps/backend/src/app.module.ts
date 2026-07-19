@@ -14,10 +14,13 @@ import { AlertsModule } from './modules/alerts/alerts.module';
 
 import { ReportsModule } from '../../../src/modules/reports/reports.module';
 import { ProfileModule } from './modules/profile/profile.module';
+import { PrismaModule } from './database/prisma.module';
+import { IncidentsModule } from './modules/incidents/incidents.module';
 
 @Module({
   imports: [
     DatabaseModule,
+    PrismaModule,
     HealthModule,
     NotificationsModule,
     ReportingModule,
@@ -30,6 +33,7 @@ import { ProfileModule } from './modules/profile/profile.module';
     NotesModule,
     AlertsModule,
     ProfileModule,
+    IncidentsModule,
   ],
   controllers: [AppController],
 })

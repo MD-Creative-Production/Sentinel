@@ -15,6 +15,7 @@ model User {
   notificationPreferences NotificationPreference[]
   auditLogs               AuditLog[]
   apiKeys                 ApiKey[]
+  assignedIncidents       Incident[]
 
   @@map("users")
 }
@@ -173,4 +174,55 @@ model NoteAuditLog {
 
   @@index([noteId])
   @@map("note_audit_logs")
+}
+
+// ---------------------------------------------------------------------------
+// Incident Management – issue #120
+// ---------------------------------------------------------------------------
+
+model Incident {
+  id              String    @id @default(cuid())
+  title           String
+  description     String
+  status          String    @default("new") // new|open|acknowledged|investigating|contained|resolved|closed|reopened
+  severity        String    @default("medium") // low|medium|high|critical
+  priority        String    @default("p3") // p1|p2|p3|p4
+  category        String?
+  organizationId  String?
+  assignedUserId  String?
+  sourceAlertIds  String[]  @default([])
+  detectionSource String?
+  tags            String[]  @default([])
+  deleted         Boolean   @default(false)
+  deletedAt       DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  resolvedAt      DateTime?
+  closedAt        DateTime?
+
+  assignedUser User? @relation(fields: [assignedUserId], references: [id])
+  auditEntries IncidentAuditLog[]
+
+  @@index([status])
+  @@index([severity])
+  @@index([priority])
+  @@index([assignedUserId])
+  @@index([organizationId])
+  @@map("incidents")
+}
+
+model IncidentAuditLog {
+  id             String   @id @default(cuid())
+  incidentId     String
+  action         String   // incident_created|status_changed|owner_assigned|owner_reassigned|owner_removed|severity_updated|priority_updated|incident_updated|resolved|closed|reopened
+  actorId        String
+  actorName      String?
+  previousValues Json?
+  newValues      Json?
+  timestamp      DateTime @default(now())
+
+  incident Incident @relation(fields: [incidentId], references: [id])
+
+  @@index([incidentId])
+  @@map("incident_audit_logs")
 }
