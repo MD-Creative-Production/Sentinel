@@ -7,27 +7,29 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  createdAt DateTime @default(now())
-  alerts    Alert[]
-  watchlist Watchlist[]
+  id                      String                   @id @default(cuid())
+  email                   String                   @unique
+  createdAt               DateTime                 @default(now())
+  alerts                  Alert[]
+  watchlist               Watchlist[]
   notificationPreferences NotificationPreference[]
   auditLogs               AuditLog[]
   apiKeys                 ApiKey[]
   assignedIncidents       Incident[]
+  memberships             Membership[]
+  invitationsSent         Invitation[]
 
   @@map("users")
 }
 
 model Alert {
-  id        String      @id @default(cuid())
+  id        String   @id @default(cuid())
   userId    String
   message   String
   severity  String
-  status    String      @default("open")
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  status    String   @default("open")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   acknowledgedAt DateTime?
   acknowledgedBy String?
@@ -80,14 +82,14 @@ model AuditLog {
 }
 
 model ApiKey {
-  id          String   @id @default(cuid())
-  userId      String
-  name        String
-  key         String   @unique
-  keyHash     String   @unique
-  lastUsedAt  DateTime?
-  revokedAt   DateTime?
-  createdAt   DateTime @default(now())
+  id         String    @id @default(cuid())
+  userId     String
+  name       String
+  key        String    @unique
+  keyHash    String    @unique
+  lastUsedAt DateTime?
+  revokedAt  DateTime?
+  createdAt  DateTime  @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -104,8 +106,8 @@ model Proposal {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  votes       Vote[]
-  events      GovernanceEvent[]
+  votes  Vote[]
+  events GovernanceEvent[]
 
   @@map("proposals")
 }
@@ -114,25 +116,25 @@ model Vote {
   id         String   @id @default(cuid())
   proposalId String
   voter      String
-  choice     String   // "yes", "no", "abstain"
+  choice     String // "yes", "no", "abstain"
   weight     String
   createdAt  DateTime @default(now())
 
-  proposal   Proposal @relation(fields: [proposalId], references: [id])
+  proposal Proposal @relation(fields: [proposalId], references: [id])
 
   @@map("votes")
 }
 
 model GovernanceEvent {
   id              String   @id @default(cuid())
-  eventType       String   // "proposal_created", "vote_cast"
+  eventType       String // "proposal_created", "vote_cast"
   proposalId      String?
   voter           String?
   transactionHash String   @unique
   metadata        Json?
   createdAt       DateTime @default(now())
 
-  proposal        Proposal? @relation(fields: [proposalId], references: [id])
+  proposal Proposal? @relation(fields: [proposalId], references: [id])
 
   @@map("governance_events")
 }
@@ -142,17 +144,17 @@ model GovernanceEvent {
 // ---------------------------------------------------------------------------
 
 model InvestigationNote {
-  id         String   @id @default(cuid())
+  id         String    @id @default(cuid())
   caseId     String
   authorId   String
   authorName String
   title      String?
   content    String
   tags       String[]
-  deleted    Boolean  @default(false)
+  deleted    Boolean   @default(false)
   deletedAt  DateTime?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 
   auditEntries NoteAuditLog[]
 
@@ -163,7 +165,7 @@ model InvestigationNote {
 model NoteAuditLog {
   id             String   @id @default(cuid())
   noteId         String
-  action         String   // "created" | "updated" | "deleted"
+  action         String // "created" | "updated" | "deleted"
   actorId        String
   actorName      String
   previousValues Json?
@@ -200,7 +202,7 @@ model Incident {
   resolvedAt      DateTime?
   closedAt        DateTime?
 
-  assignedUser User? @relation(fields: [assignedUserId], references: [id])
+  assignedUser User?              @relation(fields: [assignedUserId], references: [id])
   auditEntries IncidentAuditLog[]
 
   @@index([status])
@@ -214,7 +216,7 @@ model Incident {
 model IncidentAuditLog {
   id             String   @id @default(cuid())
   incidentId     String
-  action         String   // incident_created|status_changed|owner_assigned|owner_reassigned|owner_removed|severity_updated|priority_updated|incident_updated|resolved|closed|reopened
+  action         String // incident_created|status_changed|owner_assigned|owner_reassigned|owner_removed|severity_updated|priority_updated|incident_updated|resolved|closed|reopened
   actorId        String
   actorName      String?
   previousValues Json?
@@ -232,33 +234,98 @@ model IncidentAuditLog {
 // ---------------------------------------------------------------------------
 
 model ProtocolHealthMetric {
-  id                     String    @id @default(cuid())
+  id                     String   @id @default(cuid())
   chainId                String
-  timestamp              DateTime  @default(now())
-  transactionCount       Int       @default(0)
-  failedTransactionCount Int       @default(0)
-  contractCallCount      Int       @default(0)
-  contractDeployCount    Int       @default(0)
-  uniqueSenders          Int       @default(0)
-  monitorHealthy         Boolean   @default(true)
+  timestamp              DateTime @default(now())
+  transactionCount       Int      @default(0)
+  failedTransactionCount Int      @default(0)
+  contractCallCount      Int      @default(0)
+  contractDeployCount    Int      @default(0)
+  uniqueSenders          Int      @default(0)
+  monitorHealthy         Boolean  @default(true)
 
   @@index([chainId, timestamp])
   @@map("protocol_health_metrics")
 }
 
 model ProtocolHealthAlert {
-  id          String    @id @default(cuid())
-  chainId     String
-  alertType   String
-  severity    String    @default("medium")
-  status      String    @default("open")
-  message     String
-  metadata    Json?
+  id             String    @id @default(cuid())
+  chainId        String
+  alertType      String
+  severity       String    @default("medium")
+  status         String    @default("open")
+  message        String
+  metadata       Json?
   acknowledgedAt DateTime?
   acknowledgedBy String?
-  createdAt   DateTime  @default(now())
+  createdAt      DateTime  @default(now())
 
   @@index([chainId, status])
   @@index([status])
   @@map("protocol_health_alerts")
+}
+
+model Organization {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+
+  memberships Membership[]
+  invitations Invitation[]
+
+  @@map("organizations")
+}
+
+model Membership {
+  id             String   @id @default(cuid())
+  organizationId String
+  userId         String
+  role           String
+  createdAt      DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id])
+  user         User         @relation(fields: [userId], references: [id])
+
+  @@unique([organizationId, userId])
+  @@index([userId])
+  @@map("memberships")
+}
+
+model Invitation {
+  id             String    @id @default(cuid())
+  organizationId String
+  inviteeEmail   String
+  role           String
+  status         String    @default("pending")
+  tokenHash      String    @unique
+  expiresAt      DateTime
+  invitedById    String
+  acceptedAt     DateTime?
+  revokedAt      DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  organization Organization         @relation(fields: [organizationId], references: [id])
+  invitedBy    User                 @relation(fields: [invitedById], references: [id])
+  auditEntries InvitationAuditLog[]
+
+  @@index([organizationId])
+  @@index([inviteeEmail])
+  @@index([status])
+  @@map("invitations")
+}
+
+model InvitationAuditLog {
+  id           String   @id @default(cuid())
+  invitationId String
+  action       String
+  actorId      String?
+  actorEmail   String?
+  metadata     Json?
+  timestamp    DateTime @default(now())
+
+  invitation Invitation @relation(fields: [invitationId], references: [id])
+
+  @@index([invitationId])
+  @@map("invitation_audit_logs")
 }

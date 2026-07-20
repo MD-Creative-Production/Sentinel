@@ -17,6 +17,7 @@ import { ReportsModule } from '../../../src/modules/reports/reports.module';
 import { ProfileModule } from './modules/profile/profile.module';
 import { PrismaModule } from './database/prisma.module';
 import { IncidentsModule } from './modules/incidents/incidents.module';
+import { InvitationsModule } from './modules/invitations/invitations.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { IncidentsModule } from './modules/incidents/incidents.module';
     ProfileModule,
     IncidentsModule,
     ProtocolHealthModule,
+    InvitationsModule,
   ],
   controllers: [AppController],
 })
