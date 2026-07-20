@@ -226,3 +226,39 @@ model IncidentAuditLog {
   @@index([incidentId])
   @@map("incident_audit_logs")
 }
+
+// ---------------------------------------------------------------------------
+// Protocol Health Monitoring
+// ---------------------------------------------------------------------------
+
+model ProtocolHealthMetric {
+  id                     String    @id @default(cuid())
+  chainId                String
+  timestamp              DateTime  @default(now())
+  transactionCount       Int       @default(0)
+  failedTransactionCount Int       @default(0)
+  contractCallCount      Int       @default(0)
+  contractDeployCount    Int       @default(0)
+  uniqueSenders          Int       @default(0)
+  monitorHealthy         Boolean   @default(true)
+
+  @@index([chainId, timestamp])
+  @@map("protocol_health_metrics")
+}
+
+model ProtocolHealthAlert {
+  id          String    @id @default(cuid())
+  chainId     String
+  alertType   String
+  severity    String    @default("medium")
+  status      String    @default("open")
+  message     String
+  metadata    Json?
+  acknowledgedAt DateTime?
+  acknowledgedBy String?
+  createdAt   DateTime  @default(now())
+
+  @@index([chainId, status])
+  @@index([status])
+  @@map("protocol_health_alerts")
+}
