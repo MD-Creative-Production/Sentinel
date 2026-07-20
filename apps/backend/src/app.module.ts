@@ -11,13 +11,17 @@ import { ChainsModule } from './modules/chains/chains.module';
 import { RiskAnalyzerModule } from './modules/soroban/risk/risk-analyzer.module';
 import { NotesModule } from './modules/cases/notes/notes.module';
 import { AlertsModule } from './modules/alerts/alerts.module';
+import { ProtocolHealthModule } from './modules/protocol-health/protocol-health.module';
 
 import { ReportsModule } from '../../../src/modules/reports/reports.module';
 import { ProfileModule } from './modules/profile/profile.module';
+import { PrismaModule } from './database/prisma.module';
+import { IncidentsModule } from './modules/incidents/incidents.module';
 
 @Module({
   imports: [
     DatabaseModule,
+    PrismaModule,
     HealthModule,
     NotificationsModule,
     ReportingModule,
@@ -30,6 +34,8 @@ import { ProfileModule } from './modules/profile/profile.module';
     NotesModule,
     AlertsModule,
     ProfileModule,
+    IncidentsModule,
+    ProtocolHealthModule,
   ],
   controllers: [AppController],
 })
