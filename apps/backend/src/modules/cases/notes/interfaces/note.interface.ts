@@ -1,15 +1,15 @@
 /**
  * Data transfer object for creating a new investigation note.
  */
-export interface CreateNoteDto {
+export class CreateNoteDto {
   /** The case/investigation ID this note belongs to */
-  caseId: string;
+  caseId!: string;
   /** ID of the user creating the note */
-  authorId: string;
+  authorId!: string;
   /** Display name or handle of the author */
-  authorName: string;
+  authorName!: string;
   /** Main body content of the note */
-  content: string;
+  content!: string;
   /** Optional title for the note */
   title?: string;
   /** Optional tags for categorisation (e.g. "ioc", "remediation") */
@@ -19,7 +19,7 @@ export interface CreateNoteDto {
 /**
  * Data transfer object for updating an existing investigation note.
  */
-export interface UpdateNoteDto {
+export class UpdateNoteDto {
   /** Updated content of the note */
   content?: string;
   /** Updated title of the note */

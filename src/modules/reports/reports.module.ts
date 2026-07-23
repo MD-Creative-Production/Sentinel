@@ -1,12 +1,10 @@
 import { Module } from '@nestjs/common';
-import { ReportingModule } from '../../../apps/backend/src/modules/reporting/reporting.module';
-import { ReportsController } from './reports.controller';
-import { PdfReportService } from './pdf/pdf-report.service';
+import { ReportService } from './report.service';
+import { SchedulerService } from './scheduler.service';
+import { EmailService } from './email.service';
 
 @Module({
-  imports: [ReportingModule],
-  controllers: [ReportsController],
-  providers: [PdfReportService],
-  exports: [PdfReportService],
+  providers: [ReportService, SchedulerService, EmailService],
+  exports: [ReportService, SchedulerService],
 })
 export class ReportsModule {}
