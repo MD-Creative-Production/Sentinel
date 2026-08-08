@@ -1,11 +1,11 @@
 /**
  * Configuration for the Splunk HTTP Event Collector (HEC) provider.
  */
-export interface SplunkSiemConfig {
+export class SplunkSiemConfig {
   /** Full URL to the Splunk HEC endpoint (e.g. https://splunk.corp:8088/services/collector). */
-  hecUrl: string;
+  hecUrl!: string;
   /** HEC token used for authentication. */
-  hecToken: string;
+  hecToken!: string;
   /** Splunk source type tag applied to every event (default: "sentinel:security"). */
   sourceType?: string;
 }
@@ -13,11 +13,11 @@ export interface SplunkSiemConfig {
 /**
  * Configuration for the Elastic SIEM (ECS) provider.
  */
-export interface ElasticSiemConfig {
+export class ElasticSiemConfig {
   /** Full URL to the Elasticsearch cluster (e.g. https://elastic.corp:9200). */
-  elasticUrl: string;
+  elasticUrl!: string;
   /** Elasticsearch API key for authentication. */
-  apiKey: string;
+  apiKey!: string;
   /** Target index for Sentinel events (default: "sentinel-events"). */
   index?: string;
 }

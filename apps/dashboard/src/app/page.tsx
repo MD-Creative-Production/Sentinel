@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { KpiCard } from '@/components/dashboard/KpiCard';
 import { AlertHistoryTable } from '@/components/dashboard/AlertHistoryTable';
-import { SecurityReportingDashboard } from '@/components/dashboard/SecurityReportingDashboard';
+import { SecurityReportingDashboard } from '@/components/SecurityReportingDashboard';
 
 export const metadata: Metadata = {
   title: 'Overview',
