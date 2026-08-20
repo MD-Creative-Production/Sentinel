@@ -88,6 +88,7 @@ model ApiKey {
   name       String
   key        String    @unique
   keyHash    String    @unique
+  expiresAt  DateTime?
   lastUsedAt DateTime?
   revokedAt  DateTime?
   createdAt  DateTime  @default(now())
@@ -95,6 +96,7 @@ model ApiKey {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+  @@index([expiresAt])
   @@map("api_keys")
 }
 
