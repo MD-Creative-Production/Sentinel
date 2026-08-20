@@ -86,7 +86,6 @@ model ApiKey {
   id         String    @id @default(cuid())
   userId     String
   name       String
-  key        String    @unique
   keyHash    String    @unique
   expiresAt  DateTime?
   lastUsedAt DateTime?
@@ -97,6 +96,7 @@ model ApiKey {
 
   @@index([userId])
   @@index([expiresAt])
+  @@index([revokedAt])
   @@map("api_keys")
 }
 
