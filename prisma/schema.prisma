@@ -18,6 +18,7 @@ model User {
   assignedIncidents       Incident[]
   memberships             Membership[]
   invitationsSent         Invitation[]
+  ownedOrganizations      Organization[]           @relation("OrganizationOwner")
 
   @@map("users")
 }
@@ -268,11 +269,14 @@ model ProtocolHealthAlert {
 model Organization {
   id        String   @id @default(cuid())
   name      String
+  ownerId   String
   createdAt DateTime @default(now())
 
+  owner       User         @relation("OrganizationOwner", fields: [ownerId], references: [id])
   memberships Membership[]
   invitations Invitation[]
 
+  @@index([ownerId])
   @@map("organizations")
 }
 
