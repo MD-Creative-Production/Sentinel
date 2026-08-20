@@ -1,0 +1,212 @@
+:root {
+  --color-bg-main: #0b0e14;
+  --color-bg-card: rgba(17, 22, 32, 0.75);
+  --color-border-card: rgba(255, 255, 255, 0.08);
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #94a3b8;
+  --color-accent: #8b5cf6;
+  --color-success: #10b981;
+  --color-error: #ef4444;
+}
+
+.notifications-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  min-height: 100vh;
+  background-color: var(--color-bg-main);
+  color: var(--color-text-primary);
+  font-family:
+    'Outfit',
+    'Inter',
+    -apple-system,
+    sans-serif;
+}
+
+.notifications-header {
+  margin-bottom: 2rem;
+}
+
+.notifications-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin: 0;
+  background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.notifications-subtitle {
+  color: var(--color-text-secondary);
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.notifications-layout {
+  display: flex;
+  gap: 2rem;
+}
+
+.notifications-nav {
+  width: 14rem;
+  border-right: 1px solid var(--color-border-card);
+  padding-right: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.notifications-nav-link {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.15s ease;
+}
+
+.notifications-nav-link:hover {
+  color: var(--color-text-primary);
+}
+
+.notifications-nav-link--active {
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+.notifications-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.notifications-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-card);
+  border-radius: 12px;
+  padding: 1.5rem;
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.notifications-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border-card);
+  padding-bottom: 0.75rem;
+}
+
+.notifications-card-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.notifications-toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.notifications-toggle-input {
+  width: 1.25rem;
+  height: 1.25rem;
+  accent-color: var(--color-accent);
+}
+
+.notifications-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.notifications-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.notifications-label {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.notifications-input {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid var(--color-border-card);
+  border-radius: 8px;
+  color: var(--color-text-primary);
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.notifications-input:focus {
+  outline: 2px solid rgba(139, 92, 246, 0.5);
+  border-color: var(--color-accent);
+}
+
+.notifications-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.notifications-error {
+  color: var(--color-error);
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+.notifications-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.notifications-button {
+  background: var(--color-accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.notifications-button:hover {
+  opacity: 0.9;
+}
+
+.notifications-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.notifications-status {
+  font-size: 0.875rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+}
+
+.notifications-status--success {
+  color: var(--color-success);
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.notifications-status--error {
+  color: var(--color-error);
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
