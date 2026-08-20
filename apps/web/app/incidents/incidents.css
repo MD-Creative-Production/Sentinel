@@ -1,0 +1,302 @@
+/* Incident dashboard — palette follows the dark analyst surfaces used by the
+   other workspaces in apps/web/app. Status and priority colours are paired with
+   text labels everywhere they appear; colour is never the only signal. */
+
+.inc-dashboard {
+  padding: 1.5rem;
+  color: #e6edf3;
+  background: #0d1117;
+  min-height: 100%;
+}
+
+.inc-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-bottom: 1px solid #21262d;
+  padding-bottom: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.inc-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.inc-subtitle {
+  margin: 0.25rem 0 0;
+  color: #8b949e;
+  font-size: 0.875rem;
+}
+
+.inc-summary {
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+}
+
+.inc-summary-item {
+  text-align: right;
+}
+
+.inc-summary-item dt {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #8b949e;
+}
+
+.inc-summary-item dd {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.inc-summary-item--urgent dd {
+  color: #f85149;
+}
+
+/* -- filters -------------------------------------------------------------- */
+
+.inc-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.inc-filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.inc-filter-legend {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #8b949e;
+  min-width: 4.5rem;
+}
+
+.inc-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  border: 1px solid #30363d;
+  border-radius: 999px;
+  background: #161b22;
+  color: #c9d1d9;
+  font-size: 0.8125rem;
+  text-transform: capitalize;
+  cursor: pointer;
+}
+
+.inc-chip:hover:not(:disabled) {
+  border-color: #8b949e;
+}
+
+.inc-chip:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.inc-chip--active {
+  background: #1f6feb;
+  border-color: #1f6feb;
+  color: #ffffff;
+}
+
+.inc-chip-count {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.75;
+}
+
+/* -- results bar ---------------------------------------------------------- */
+
+.inc-results {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.inc-results-count {
+  margin: 0;
+  color: #8b949e;
+  font-size: 0.8125rem;
+}
+
+.inc-clear {
+  background: none;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  color: #c9d1d9;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+/* -- listing -------------------------------------------------------------- */
+
+.inc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.inc-row {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid #21262d;
+  border-radius: 8px;
+  background: #161b22;
+}
+
+.inc-row--terminal {
+  opacity: 0.65;
+}
+
+.inc-row-priority {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 8.5rem;
+}
+
+.inc-priority-dot {
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.inc-priority-dot--p1 { background: #f85149; }
+.inc-priority-dot--p2 { background: #db6d28; }
+.inc-priority-dot--p3 { background: #d29922; }
+.inc-priority-dot--p4 { background: #8b949e; }
+
+.inc-priority-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.inc-row-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.inc-row-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.inc-row-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.inc-status,
+.inc-severity {
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  border: 1px solid currentColor;
+}
+
+.inc-status--new,
+.inc-status--reopened { color: #58a6ff; }
+.inc-status--open,
+.inc-status--acknowledged { color: #d29922; }
+.inc-status--investigating,
+.inc-status--contained { color: #db6d28; }
+.inc-status--resolved,
+.inc-status--closed { color: #3fb950; }
+
+.inc-severity--critical { color: #f85149; }
+.inc-severity--high { color: #db6d28; }
+.inc-severity--medium { color: #d29922; }
+.inc-severity--low { color: #8b949e; }
+
+.inc-row-description {
+  margin: 0.5rem 0;
+  color: #8b949e;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.inc-row-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0.5rem 0 0;
+}
+
+.inc-meta-item {
+  display: flex;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+}
+
+.inc-meta-item dt {
+  color: #6e7681;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.inc-meta-item dd {
+  margin: 0;
+  color: #c9d1d9;
+}
+
+.inc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  list-style: none;
+  margin: 0.625rem 0 0;
+  padding: 0;
+}
+
+.inc-tag {
+  padding: 0.0625rem 0.4375rem;
+  border-radius: 4px;
+  background: #21262d;
+  color: #8b949e;
+  font-size: 0.6875rem;
+}
+
+/* -- empty state ---------------------------------------------------------- */
+
+.inc-empty {
+  padding: 2.5rem 1rem;
+  text-align: center;
+  border: 1px dashed #30363d;
+  border-radius: 8px;
+}
+
+.inc-empty-title {
+  margin: 0;
+  font-weight: 600;
+}
+
+.inc-empty-hint {
+  margin: 0.375rem 0 0;
+  color: #8b949e;
+  font-size: 0.875rem;
+}
