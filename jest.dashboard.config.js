@@ -21,7 +21,9 @@ module.exports = {
           skipLibCheck: true,
           types: ['jest', 'node'],
           // Treat CSS imports as any — they are mocked anyway
-          paths: {},
+          paths: {
+            "@/*": ["./apps/dashboard/src/*"]
+          },
         },
         diagnostics: {
           ignoreCodes: ['TS2882', 'TS7016'],
@@ -30,6 +32,7 @@ module.exports = {
     ],
   },
   moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/apps/dashboard/src/$1',
     '\\.css$': '<rootDir>/test/__mocks__/styleMock.js',
   },
 };
