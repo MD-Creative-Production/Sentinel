@@ -53,3 +53,31 @@ Related to #
 ## Additional Context
 
 <!-- Add any other context about the PR -->
+
+## 📝 Description
+
+Implements an extensible API versioning engine supporting **URI Path Strategy** (`/api/v1/`), **Custom HTTP Header Strategy** (`X-API-Version: 2`), and a global fallback mechanism. Decouples version resolution from controller logic using the **Strategy Pattern** and enforces RFC 8594-compliant `Deprecation` and `Sunset` headers for legacy routes.
+
+Fixes #92
+
+---
+
+## 🛠️ Type of Change
+
+- [x] **New Feature** (non-breaking change adding functionality)
+- [x] **Refactoring / Architecture** (internal pattern enhancement)
+- [x] **Documentation & Specs** (API versioning standards)
+
+---
+
+## 🧪 How Has This Been Tested?
+
+### 1. Manual Verification Matrix
+
+Verified using `curl` against local server execution:
+
+- **URI Path Resolution (`v2`):**
+  ```bash
+  curl -i http://localhost:3000/api/v2/resources
+  # Expected: HTTP 200 | Header: X-Resolved-API-Version: v2
+  ```
