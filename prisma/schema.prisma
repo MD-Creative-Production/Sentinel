@@ -24,19 +24,22 @@ model User {
 }
 
 model Alert {
-  id        String   @id @default(cuid())
-  userId    String
-  message   String
-  severity  String
-  status    String   @default("open")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String   @id @default(cuid())
+  userId     String
+  incidentId String?
+  message    String
+  severity   String
+  status     String   @default("open")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   acknowledgedAt DateTime?
   acknowledgedBy String?
 
-  user User @relation(fields: [userId], references: [id])
+  user     User      @relation(fields: [userId], references: [id])
+  incident Incident? @relation(fields: [incidentId], references: [id])
 
+  @@index([incidentId])
   @@map("alerts")
 }
 
@@ -206,6 +209,7 @@ model Incident {
   closedAt        DateTime?
 
   assignedUser User?              @relation(fields: [assignedUserId], references: [id])
+  alerts       Alert[]
   auditEntries IncidentAuditLog[]
 
   @@index([status])
