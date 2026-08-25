@@ -20,6 +20,13 @@
       "@integrations/*": ["./apps/backend/src/integrations/*"]
     }
   },
-  "include": ["apps/backend/**/*", "libs/**/*", "database/**/*", "prisma.config.ts"],
+  "include": [
+    "apps/backend/**/*",
+    "libs/**/*",
+    "database/**/*",
+    "src/**/*",
+    "tests/**/*",
+    "prisma.config.ts"
+  ],
   "exclude": ["node_modules", "dist", "apps/dashboard"]
 }
