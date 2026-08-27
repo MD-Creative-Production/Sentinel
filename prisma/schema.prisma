@@ -19,6 +19,9 @@ model User {
   memberships             Membership[]
   invitationsSent         Invitation[]
   ownedOrganizations      Organization[]           @relation("OrganizationOwner")
+  leadCases               Case[]                   @relation("LeadInvestigator")
+  caseAssignments         CaseAssignee[]
+  caseActivities          CaseActivityLog[]        @relation("CaseActivityActor")
 
   @@map("users")
 }
@@ -163,6 +166,7 @@ model InvestigationNote {
   updatedAt  DateTime  @updatedAt
 
   auditEntries NoteAuditLog[]
+  case         Case?          @relation(fields: [caseId], references: [id], onDelete: Cascade)
 
   @@index([caseId])
   @@map("investigation_notes")
@@ -211,6 +215,7 @@ model Incident {
   assignedUser User?              @relation(fields: [assignedUserId], references: [id])
   alerts       Alert[]
   auditEntries IncidentAuditLog[]
+  caseIncidents CaseIncident[]
 
   @@index([status])
   @@index([severity])
@@ -234,6 +239,104 @@ model IncidentAuditLog {
 
   @@index([incidentId])
   @@map("incident_audit_logs")
+}
+
+// ---------------------------------------------------------------------------
+// Forensic Investigation & Case Management – issue #126
+// ---------------------------------------------------------------------------
+
+enum CaseStatus {
+  DRAFT
+  ACTIVE
+  IN_REVIEW
+  SUSPENDED
+  CLOSED
+  ARCHIVED
+}
+
+enum CaseSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum CaseAssigneeRole {
+  INVESTIGATOR
+  LEGAL_OBSERVER
+  EXTERNAL_AUDITOR
+}
+
+model Case {
+  id                 String       @id @default(uuid())
+  caseNumber         String       @unique
+  title              String
+  description        String
+  status             CaseStatus   @default(DRAFT)
+  severity           CaseSeverity @default(MEDIUM)
+  leadInvestigatorId String?
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+  closedAt           DateTime?
+  nextReviewAt       DateTime?
+
+  leadInvestigator   User?        @relation("LeadInvestigator", fields: [leadInvestigatorId], references: [id], onDelete: SetNull)
+  assignees          CaseAssignee[]
+  incidents          CaseIncident[]
+  activityLogs       CaseActivityLog[]
+  notes              InvestigationNote[]
+
+  @@index([status])
+  @@index([severity])
+  @@index([leadInvestigatorId])
+  @@index([caseNumber])
+  @@map("cases")
+}
+
+model CaseAssignee {
+  id         String           @id @default(uuid())
+  caseId     String
+  userId     String
+  role       CaseAssigneeRole @default(INVESTIGATOR)
+  assignedAt DateTime         @default(now())
+
+  case       Case             @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  user       User             @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  @@unique([caseId, userId])
+  @@index([userId])
+  @@map("case_assignees")
+}
+
+model CaseIncident {
+  id         String   @id @default(uuid())
+  caseId     String
+  incidentId String
+  linkedAt   DateTime @default(now())
+
+  case       Case     @relation(fields: [caseId], references: [id], onDelete: Restrict)
+  incident   Incident @relation(fields: [incidentId], references: [id], onDelete: Restrict)
+
+  @@unique([caseId, incidentId])
+  @@index([incidentId])
+  @@map("case_incidents")
+}
+
+model CaseActivityLog {
+  id            String   @id @default(uuid())
+  caseId        String
+  actorId       String
+  action        String
+  ipAddress     String?
+  changedFields Json?
+  timestamp     DateTime @default(now())
+
+  case          Case     @relation(fields: [caseId], references: [id], onDelete: Restrict)
+  actor         User     @relation("CaseActivityActor", fields: [actorId], references: [id], onDelete: Restrict)
+
+  @@index([caseId])
+  @@index([actorId])
+  @@map("case_activity_logs")
 }
 
 // ---------------------------------------------------------------------------
