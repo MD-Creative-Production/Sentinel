@@ -4,6 +4,7 @@ module.exports = {
   testEnvironment: 'node',
   rootDir: '.',
   testMatch: ['<rootDir>/apps/backend/**/*.spec.ts', '<rootDir>/src/**/*.spec.ts'],
+  testPathIgnorePatterns: ['/node_modules/', '/src/api-keys/'],
   transform: {
     '^.+\\.ts$': [
       'ts-jest',

@@ -143,11 +143,11 @@ export function Sidebar() {
 
   return (
     <nav
-      className="w-60 flex-shrink-0 bg-gray-900 border-r border-gray-800 flex flex-col"
+      className="w-60 flex-shrink-0 bg-gray-50 dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 flex flex-col"
       aria-label="Main navigation"
     >
       {/* Logo */}
-      <div className="h-16 flex items-center px-5 border-b border-gray-800">
+      <div className="h-16 flex items-center px-5 border-b border-gray-200 dark:border-gray-800">
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-lg bg-sentinel-600 flex items-center justify-center">
             <svg
@@ -165,7 +165,9 @@ export function Sidebar() {
               />
             </svg>
           </div>
-          <span className="text-white font-semibold text-lg tracking-tight">Sentinel</span>
+          <span className="text-gray-900 dark:text-white font-semibold text-lg tracking-tight">
+            Sentinel
+          </span>
         </div>
       </div>
 
@@ -181,8 +183,8 @@ export function Sidebar() {
                 className={[
                   'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors',
                   isActive
-                    ? 'bg-sentinel-700/30 text-sentinel-300 border border-sentinel-700/50'
-                    : 'text-gray-400 hover:bg-gray-800 hover:text-gray-100',
+                    ? 'bg-sentinel-700/30 text-sentinel-600 dark:text-sentinel-300 border border-sentinel-700/50'
+                    : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100',
                 ].join(' ')}
               >
                 {item.icon}
@@ -194,8 +196,8 @@ export function Sidebar() {
       </ul>
 
       {/* Footer */}
-      <div className="px-5 py-4 border-t border-gray-800">
-        <p className="text-xs text-gray-600">Sentinel v0.1.0</p>
+      <div className="px-5 py-4 border-t border-gray-200 dark:border-gray-800">
+        <p className="text-xs text-gray-400 dark:text-gray-600">Sentinel v0.1.0</p>
       </div>
     </nav>
   );
