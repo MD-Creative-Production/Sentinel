@@ -43,18 +43,21 @@ export function useWatchlists() {
     }
   }, []);
 
-  const addEntry = useCallback(async (entry: { name: string; network: string; address: string; tags: string[] }) => {
-    const res = await fetch(`${API_BASE}/v1/watchlists`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(entry),
-    });
-    if (!res.ok) {
-      const body = await res.json().catch(() => ({}));
-      throw new Error(body.error ?? `Failed to add entry: ${res.status}`);
-    }
-    return res.json();
-  }, []);
+  const addEntry = useCallback(
+    async (entry: { name: string; network: string; address: string; tags: string[] }) => {
+      const res = await fetch(`${API_BASE}/v1/watchlists`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(entry),
+      });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error ?? `Failed to add entry: ${res.status}`);
+      }
+      return res.json();
+    },
+    [],
+  );
 
   const removeEntry = useCallback(async (id: string) => {
     const res = await fetch(`${API_BASE}/v1/watchlists/${id}`, { method: 'DELETE' });
@@ -75,5 +78,14 @@ export function useWatchlists() {
     fetchEntries();
   }, [fetchEntries]);
 
-  return { entries, meta, loading, error, addEntry, removeEntry, toggleEntry, refetch: fetchEntries };
+  return {
+    entries,
+    meta,
+    loading,
+    error,
+    addEntry,
+    removeEntry,
+    toggleEntry,
+    refetch: fetchEntries,
+  };
 }
