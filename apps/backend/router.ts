@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
-import { VersionResolver } from './common/middleware/versionResolver';
-import { UriVersionStrategy } from './common/strategies/uriStrategy';
-import { HeaderVersionStrategy } from './common/strategies/headerStrategy';
+import { VersionResolver } from './src/common/middleware/versionResolver';
+import { UriVersionStrategy } from './src/common/strategies/uriStrategy';
+import { HeaderVersionStrategy } from './src/common/strategies/headerStrategy';
 import { resourceRouterV1 } from './v1/routes/resourceRouter';
 import { resourceRouterV2 } from './v2/routes/resourceRouter';
 

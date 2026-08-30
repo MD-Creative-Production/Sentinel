@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { setDeprecationHeaders } from '../../common/utils/deprecation';
+import { setDeprecationHeaders } from '../../src/common/utils/deprecation';
 
 export class ResourceControllerV1 {
   public static getResources(req: Request, res: Response): void {
