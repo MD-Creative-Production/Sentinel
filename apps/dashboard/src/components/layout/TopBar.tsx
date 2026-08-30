@@ -1,6 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import { ThemeToggle } from '@/components/theme/ThemeToggle';
 
 const pageTitles: Record<string, string> = {
   '/': 'Overview',
@@ -15,12 +16,12 @@ export function TopBar() {
   const title = pageTitles[pathname] ?? 'Dashboard';
 
   return (
-    <header className="h-16 flex-shrink-0 bg-gray-900 border-b border-gray-800 flex items-center justify-between px-6">
+    <header className="h-16 flex-shrink-0 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between px-6">
       {/* Breadcrumb / page title */}
-      <div className="flex items-center gap-2 text-sm text-gray-400">
-        <span>Sentinel</span>
+      <div className="flex items-center gap-2 text-sm text-gray-400 dark:text-gray-400">
+        <span className="text-gray-500 dark:text-gray-400">Sentinel</span>
         <svg
-          className="w-4 h-4 text-gray-600"
+          className="w-4 h-4 text-gray-300 dark:text-gray-600"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -33,6 +34,9 @@ export function TopBar() {
 
       {/* Right actions */}
       <div className="flex items-center gap-3">
+        {/* Theme toggle */}
+        <ThemeToggle />
+
         {/* Live indicator */}
         <div
           className="flex items-center gap-1.5 text-xs text-emerald-400"
