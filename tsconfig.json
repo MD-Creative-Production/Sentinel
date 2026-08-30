@@ -24,7 +24,7 @@
     "apps/backend/**/*",
     "libs/**/*",
     "database/**/*",
-    "src/**/*",
+    "src/modules/reports/**/*",
     "tests/**/*",
     "prisma.config.ts"
   ],
