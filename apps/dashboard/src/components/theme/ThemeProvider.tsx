@@ -31,7 +31,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const toggleTheme = () => {
-    setTheme((prev) => {
+    setTheme(prev => {
       const next = prev === 'dark' ? 'light' : 'dark';
       localStorage.setItem('sentinel-theme', next);
       document.documentElement.classList.remove('dark', 'light');
@@ -44,9 +44,5 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     return <>{children}</>;
   }
 
-  return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
 }
