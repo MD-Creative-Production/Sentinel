@@ -4,9 +4,9 @@
   "description": "[![License: MIT](https://img.shields.io/badge/License-MIT-red.svg)](https://opensource.org/licenses/MIT)\r [![Ecosystem: Stellar/EVM](https://img.shields.io/badge/Ecosystem-Stellar%20%7C%20EVM-purple.svg)](https://stellar.org)\r [![Security: Real--Time](https://img.shields.io/badge/Security-Real--Time%20Monitoring-orange.svg)](#)",
   "main": "index.js",
   "scripts": {
-    "build": "npm run prisma:generate && npm run build:backend",
-    "build:backend": "tsc --project apps/backend/tsconfig.app.json",
-    "build:dashboard": "tsc --project apps/dashboard/tsconfig.json",
+    "build": "node init && npm run prisma:generate && npm run build:backend",
+    "build:backend": "node init && tsc --project apps/backend/tsconfig.app.json",
+    "build:dashboard": "node init && tsc --project apps/dashboard/tsconfig.json",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
