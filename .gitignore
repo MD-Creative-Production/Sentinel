@@ -1,8 +1,6 @@
-.env
-.env.local
-.env.production
 dist/
 node_modules/
 coverage/
 .next/
 apps/dashboard/.next/
+config.bat
